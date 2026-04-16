@@ -17,6 +17,7 @@ class PenggunaSeeder extends Seeder
         DB::table('pengguna')->insert([
             [
                 'id_pengguna' => 1,
+                'id_jenis_pengguna' => 1,
                 'nama_pengguna' => 'Admin Sistem',
                 'nim_pengguna' => 00000,
                 'email_pengguna' => 'admin@gmail.com',
@@ -25,6 +26,7 @@ class PenggunaSeeder extends Seeder
             ],
             [
                 'id_pengguna' => 2,
+                'id_jenis_pengguna' => 2,
                 'nama_pengguna' => 'Zefanya',
                 'nim_pengguna' => '2341760001',
                 'email_pengguna' => 'zefanya@gmail.com',
@@ -33,6 +35,7 @@ class PenggunaSeeder extends Seeder
             ],
             [
                 'id_pengguna' => 3,
+                'id_jenis_pengguna' => 2,
                 'nama_pengguna' => 'Mahasiswa 2',
                 'nim_pengguna' => '2341760002',
                 'email_pengguna' => 'mhs2@gmail.com',
