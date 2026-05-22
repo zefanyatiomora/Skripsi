@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AreaFungsiModel;
 use App\Models\ClusterSkillModel;
+use Illuminate\Support\Facades\Auth;
+use App\Models\HasilTesModel;
+use App\Models\HasilJawabanModel;
+use App\Models\HasilRekomendasiModel;
 
 class TesKemampuanController extends Controller
 {
@@ -48,27 +52,97 @@ public function soal($id_cluster)
     return view('tes_kemampuan.soal', compact('cluster', 'kompetensi'));
 }
     // proses jawaban
-    public function submit(Request $request)
-    {
-        $jawaban = $request->input('jawaban');
+   public function submit(Request $request)
+{
+    $jawaban = $request->input('jawaban');
+    $id_cluster = $request->id_cluster;
 
-        $total = array_sum($jawaban);
-        $jumlah = count($jawaban);
-        $persen = ($total / $jumlah) * 100;
+    $user = Auth::user();
 
-        // RULE
-        if ($persen >= 80) {
-            $hasil = "Sangat Cocok";
-        } elseif ($persen >= 60) {
-            $hasil = "Cocok";
-        } elseif ($persen >= 40) {
-            $hasil = "Cukup";
-        } else {
-            $hasil = "Tidak Cocok";
+    // 1. SIMPAN HASIL TES
+    $hasilTes = HasilTesModel::create([
+        'id_pengguna' => $user->id_pengguna,
+        'id_cluster_skill' => $id_cluster,
+        'tanggal_tes' => now()
+    ]);
+
+    $cluster = ClusterSkillModel::with('okupasi.kompetensi')
+        ->findOrFail($id_cluster);
+
+    $hasil = [];
+
+    // 🔥 UNTUK BREAKDOWN
+    $kompetensiSummary = [];
+
+    foreach ($cluster->okupasi as $okupasi) {
+
+        $total = $okupasi->kompetensi->count();
+        $skor = 0;
+
+        foreach ($okupasi->kompetensi as $k) {
+
+            $nilai = $jawaban[$k->id_kompetensi] ?? 0;
+
+            // 2. SIMPAN JAWABAN
+            HasilJawabanModel::create([
+                'id_hasil' => $hasilTes->id_hasil,
+                'id_kompetensi' => $k->id_kompetensi,
+                'nilai' => $nilai
+            ]);
+
+            if ($nilai == 1) {
+                $skor++;
+            }
+
+            // 🔥 KUMPULKAN DATA BREAKDOWN
+            if (!isset($kompetensiSummary[$k->id_kompetensi])) {
+                $kompetensiSummary[$k->id_kompetensi] = [
+                    'nama' => $k->kompetensi,
+                    'total' => 0,
+                    'jumlah' => 0
+                ];
+            }
+
+            $kompetensiSummary[$k->id_kompetensi]['total']++;
+            $kompetensiSummary[$k->id_kompetensi]['jumlah'] += $nilai;
         }
 
-        return view('tes_kemampuan.hasil', compact(
-            'total', 'jumlah', 'persen', 'hasil'
-        ));
+        // HITUNG PERSENTASE
+        $persen = $total > 0 ? ($skor / $total) * 100 : 0;
+
+        // 3. SIMPAN REKOMENDASI
+        HasilRekomendasiModel::create([
+            'id_hasil' => $hasilTes->id_hasil,
+            'id_okupasi' => $okupasi->id_okupasi,
+            'skor' => $persen
+        ]);
+
+        $hasil[] = [
+            'okupasi' => $okupasi,
+            'persen' => $persen
+        ];
     }
+
+    // SORTING
+    usort($hasil, function ($a, $b) {
+        return $b['persen'] <=> $a['persen'];
+    });
+
+    // 🔥 HITUNG NILAI AKHIR PER KOMPETENSI
+    $kompetensi = collect($kompetensiSummary)->map(function ($item) {
+        $persen = $item['total'] > 0
+            ? ($item['jumlah'] / $item['total']) * 100
+            : 0;
+
+        return [
+            'nama' => $item['nama'],
+            'nilai' => round($persen)
+        ];
+    })
+    ->sortByDesc('nilai')
+    ->take(6) // biar rapi
+    ->values();
+
+    return view('tes_kemampuan.hasil', compact('hasil', 'cluster', 'kompetensi'));
+}
 }

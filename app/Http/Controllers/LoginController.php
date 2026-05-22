@@ -4,49 +4,82 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\PenggunaModel;
 
 class LoginController extends Controller
 {
-    // halaman login
+     // ======================
+    // LOGIN
+    // ======================
     public function index()
-    {
-        return view('auth.login');
-    }
-
-    // proses login pakai NIM
+{
+    return view('auth.login');
+}
     public function login(Request $request)
-    {
-        $request->validate([
-            'nim_pengguna' => 'required',
-            'password' => 'required',
-        ]);
+{
+    $request->validate([
+        'username' => 'required',
+        'password' => 'required'
+    ]);
 
-        $credentials = [
-            'nim_pengguna' => $request->nim_pengguna,
-            'password' => $request->password,
-        ];
+    // cari user berdasarkan username
+    $user = PenggunaModel::where('username', $request->username)->first();
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+    // cek user & password
+    if ($user && Hash::check($request->password, $user->password)) {
 
-            // redirect sesuai role
-            if (Auth::user()->role == 'admin') {
-                return redirect('/dashboard');
-            } else {
-                return redirect('/dashboard-mahasiswa');
-            }
+        Auth::login($user); // login manual
+
+        $request->session()->regenerate();
+
+        // redirect sesuai role
+        if ($user->role == 'mahasiswa') {
+            return redirect()->route('dashboard.mahasiswa');
         }
 
-        return back()->with('error', 'NIM atau password salah');
+        return redirect('/');
     }
 
-    // logout
+    return back()->with('error', 'Username atau password salah');
+}
+
+    // ======================
+    // REGISTER
+    // ======================
+    public function register(Request $request)
+{
+    $request->validate([
+        'nama_pengguna' => 'required',
+        'username' => 'required|unique:pengguna',
+        'email_pengguna' => 'required|email|unique:pengguna',
+        'password' => 'required|min:6',
+    ]);
+
+    $user = PenggunaModel::create([
+        'nama_pengguna' => $request->nama_pengguna,
+        'username' => $request->username,
+        'email_pengguna' => $request->email_pengguna,
+        'password' => Hash::make($request->password),
+        'role' => 'mahasiswa',
+        'id_jenis_pengguna' => 2
+    ]);
+
+    Auth::login($user);
+
+    return redirect()->route('dashboard.mahasiswa');
+}
+
+    // ======================
+    // LOGOUT
+    // ======================
     public function logout(Request $request)
     {
         Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/');
     }
 }
