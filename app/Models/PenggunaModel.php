@@ -16,7 +16,7 @@ class PenggunaModel extends Authenticatable
 
     protected $fillable = [
         'nama_pengguna',
-        'nim_pengguna',
+        'username',
         'email_pengguna',
         'password',
         'role',
@@ -45,6 +45,7 @@ class PenggunaModel extends Authenticatable
     }
     public function getAuthIdentifierName()
 {
-    return 'nim_pengguna';
+    return 'username';
 }
+
 }

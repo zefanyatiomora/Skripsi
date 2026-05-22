@@ -24,8 +24,8 @@ class ClusterSkillModel extends Model
 {
     return $this->hasMany(
         OkupasiModel::class,
-        'id_cluster',      // FK di tabel okupasi
-        'id_cluster'       // PK di cluster
+        'id_cluster_skill',      // FK di tabel okupasi
+        'id_cluster_skill'       // PK di cluster
     );
 }
 
