@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
             KompetensiSeeder::class,
             OkupasiKompetensiSeeder::class,
             PenggunaSeeder::class, // ⬅️ TERAKHIR
+            ScreeningPertanyaanSeeder::class,
+            ScreeningMappingSeeder::class
         ]);
     }
 }
