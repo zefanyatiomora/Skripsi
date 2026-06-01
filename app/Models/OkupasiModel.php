@@ -4,16 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\AreaFungsiModel;
-use App\Models\ClusterSkillModel;
 
 class OkupasiModel extends Model
 {
     use HasFactory;
 
     protected $table = 'okupasi';
+
     protected $primaryKey = 'id_okupasi';
+
     protected $fillable = [
         'kode_okupasi',
         'id_cluster_skill',
@@ -22,22 +21,33 @@ class OkupasiModel extends Model
         'deskripsi',
     ];
 
-    public function clusterSkill(): BelongsTo
+    public function clusterSkill()
     {
-        return $this->belongsTo(ClusterSkillModel::class, 'id_cluster_skill', 'id_cluster_skill');
+        return $this->belongsTo(
+            ClusterSkillModel::class,
+            'id_cluster_skill',
+            'id_cluster_skill'
+        );
     }
 
-    public function areaFungsi(): BelongsTo
+    public function areaFungsi()
     {
-        return $this->belongsTo(AreaFungsiModel::class, 'id_area_fungsi', 'id_area_fungsi');
+        return $this->belongsTo(
+            AreaFungsiModel::class,
+            'id_area_fungsi',
+            'id_area_fungsi'
+        );
     }
-public function kompetensi()
-{
-    return $this->belongsToMany(
-        KompetensiModel::class,
-        'okupasi_kompetensi', // tabel pivot
-        'id_okupasi',
-        'id_kompetensi'
-    );
-}
+
+    public function kompetensi()
+    {
+        return $this->belongsToMany(
+            KompetensiModel::class,
+            'okupasi_kompetensi',
+            'id_okupasi',
+            'id_kompetensi'
+        )
+        ->withPivot('id_okupasi_kompetensi')
+        ->withTimestamps();
+    }
 }
