@@ -1,279 +1,536 @@
 @extends('layouts.template')
 @section('content')
 
-    <style>
-        body {
-            background: #f4f7fb;
+<style>
+    body{
+        background:#f3f5f9;
+        font-family:'Poppins',sans-serif;
+    }
+
+    /* ===== WRAPPER ===== */
+    .dashboard-wrapper{
+        padding:5px 0 20px;
+    }
+
+    /* ===== HERO ===== */
+    .hero-card{
+        background:linear-gradient(90deg,#020817,#0f172a,#1e293b);
+        border-radius:20px;
+        padding:24px 28px;
+        color:white;
+        min-height:150px;
+        display:flex;
+        align-items:center;
+        box-shadow:0 6px 18px rgba(15,23,42,0.10);
+    }
+
+    .hero-card h1{
+        font-size:28px;
+        font-weight:700;
+        margin-bottom:8px;
+        line-height:1.2;
+    }
+
+    .hero-card p{
+        font-size:14px;
+        line-height:1.7;
+        color:rgba(255,255,255,0.82);
+        max-width:620px;
+        margin-bottom:0;
+    }
+
+    .btn-start{
+        margin-top:16px;
+        background:white;
+        border:none;
+        border-radius:40px;
+        padding:10px 20px;
+        font-weight:600;
+        color:#111827;
+        transition:.3s;
+        font-size:13px;
+    }
+
+    .btn-start:hover{
+        transform:translateY(-2px);
+        background:#f8fafc;
+    }
+
+    /* ===== INFO CARD ===== */
+    .info-card{
+        background:white;
+        border-radius:18px;
+        padding:20px;
+        display:flex;
+        align-items:center;
+        gap:14px;
+        border:1px solid #e5e7eb;
+        transition:.25s;
+        height:100%;
+    }
+
+    .info-card:hover{
+        transform:translateY(-3px);
+        box-shadow:0 8px 18px rgba(0,0,0,0.04);
+    }
+
+    .info-icon{
+        width:52px;
+        height:52px;
+        border-radius:50%;
+        background:#eef2ff;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:18px;
+        color:#0f172a;
+        flex-shrink:0;
+    }
+
+    .info-label{
+        font-size:11px;
+        text-transform:uppercase;
+        letter-spacing:.8px;
+        color:#64748b;
+        font-weight:600;
+        margin-bottom:4px;
+    }
+
+    .info-value{
+        font-size:22px;
+        font-weight:700;
+        color:#0f172a;
+        line-height:1.2;
+    }
+
+    /* ===== SECTION CARD ===== */
+    .section-card{
+        background:white;
+        border-radius:20px;
+        border:1px solid #e5e7eb;
+        padding:24px;
+        height:100%;
+    }
+
+    .section-title{
+        font-size:18px;
+        font-weight:700;
+        color:#111827;
+        margin-bottom:24px;
+    }
+
+    /* ===== STEP ===== */
+    .step{
+        display:flex;
+        gap:14px;
+        position:relative;
+        padding-bottom:22px;
+    }
+
+    .step:last-child{
+        padding-bottom:0;
+    }
+
+    .step:last-child .step-line{
+        display:none;
+    }
+
+    .step-left{
+        position:relative;
+    }
+
+    .step-number{
+        width:34px;
+        height:34px;
+        border-radius:50%;
+        background:#0f172a;
+        color:white;
+        font-size:13px;
+        font-weight:700;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position:relative;
+        z-index:2;
+    }
+
+    .step-line{
+        width:2px;
+        height:100%;
+        background:#dbe3ef;
+        position:absolute;
+        left:16px;
+        top:34px;
+    }
+
+    .step-title{
+        font-size:15px;
+        font-weight:600;
+        color:#111827;
+        margin-bottom:4px;
+    }
+
+    .step-desc{
+        color:#64748b;
+        line-height:1.6;
+        font-size:13px;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state{
+        border:2px dashed #d1d5db;
+        border-radius:20px;
+        padding:40px 24px;
+        text-align:center;
+        min-height:360px;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .empty-icon{
+        width:72px;
+        height:72px;
+        border-radius:50%;
+        background:#eef2ff;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:28px;
+        color:#64748b;
+        margin-bottom:20px;
+    }
+
+    .empty-title{
+        font-size:22px;
+        font-weight:700;
+        color:#111827;
+        margin-bottom:10px;
+    }
+
+    .empty-text{
+        max-width:420px;
+        color:#64748b;
+        line-height:1.7;
+        font-size:14px;
+        margin-bottom:22px;
+    }
+
+    .btn-dark-custom{
+        background:#020817;
+        color:white;
+        border:none;
+        border-radius:12px;
+        padding:12px 24px;
+        font-size:14px;
+        font-weight:600;
+        transition:.25s;
+    }
+
+    .btn-dark-custom:hover{
+        background:#111827;
+        color:white;
+    }
+
+    /* ===== RESULT ITEM ===== */
+    .job-item{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:14px 16px;
+        border-radius:14px;
+        background:#f8fafc;
+        margin-bottom:12px;
+        transition:.25s;
+    }
+
+    .job-item:hover{
+        background:#eef2ff;
+        transform:translateX(3px);
+    }
+
+    .job-name{
+        font-size:14px;
+        font-weight:600;
+        color:#111827;
+    }
+
+    .job-score{
+        font-size:16px;
+        font-weight:700;
+        color:#0f172a;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:992px){
+
+        .hero-card{
+            padding:20px;
+            min-height:auto;
         }
 
-        /* ===== WELCOME ===== */
-        .welcome-card {
-            border-radius: 18px;
-            background: linear-gradient(135deg, #1e3a8a, #2563eb);
-            color: white;
-            padding: 28px;
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.25);
-            transition: 0.3s;
+        .hero-card h1{
+            font-size:24px;
         }
 
-        .welcome-card:hover {
-            transform: translateY(-3px);
+        .hero-card p{
+            font-size:13px;
         }
 
-        /* ===== INFO CARD ===== */
-        .info-card {
-            border: none;
-            border-radius: 16px;
-            padding: 18px;
-            text-align: center;
-            background: white;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
-            transition: 0.25s;
+        .section-card{
+            margin-bottom:18px;
         }
 
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        .empty-state{
+            min-height:auto;
         }
+    }
+</style>
 
-        /* ICON */
-        .icon-box {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: auto;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
+<div class="container-fluid dashboard-wrapper">
 
-        .bg-blue {
-            background: #e0ecff;
-            color: #2563eb;
-        }
+    <!-- HERO -->
+    <div class="hero-card mb-4">
 
-        .bg-green {
-            background: #e6f9f0;
-            color: #10b981;
-        }
+        <div>
+            <h1>Halo, {{ $user->nama_pengguna }} 👋</h1>
 
-        .bg-orange {
-            background: #fff4e6;
-            color: #f59e0b;
-        }
+            <p>
+                Temukan rekomendasi karier terbaik berdasarkan kemampuan dan minat Anda.
+                Ikuti tes sekarang untuk membuka potensi masa depanmu.
+            </p>
 
-        /* ===== SECTION CARD ===== */
-        .section-card {
-            border: none;
-            border-radius: 16px;
-            background: white;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        /* ===== STEP ===== */
-        .step {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .step-number {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #2563eb;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .step-text small {
-            color: #6b7280;
-        }
-
-        /* ===== JOB LIST ===== */
-        .job-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px;
-            border-radius: 12px;
-            background: #f8fafc;
-            margin-bottom: 10px;
-            transition: 0.25s;
-        }
-
-        .job-item:hover {
-            background: #eef4ff;
-            transform: translateX(5px);
-        }
-
-        /* ===== PROFILE ===== */
-        .profile-box {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 10px;
-        }
-
-        /* ===== TITLE ===== */
-        .section-title {
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-    </style>
-
-    <div class="container-fluid">
-
-        <!-- WELCOME -->
-        <div class="welcome-card mb-4 d-flex justify-content-between align-items-center flex-wrap">
-
-            <div>
-                <h4 class="mb-1">Halo, {{ $user->nama_pengguna }} 👋</h4>
-                <small>
-                    Temukan jalur karier terbaik berdasarkan kemampuan Anda.
-                </small>
-            </div>
-
-            <a href="{{ route('screening.index') }}" class="btn btn-light text-primary fw-semibold px-4 py-2">
-                <i class="fas fa-play-circle me-1"></i> Mulai Tes
+            <a href="{{ route('screening.index') }}" class="btn btn-start">
+                Mulai Tes
+                <i class="fas fa-arrow-right ml-2"></i>
             </a>
-
         </div>
-        
+
+    </div>
+
     <!-- INFO -->
     <div class="row mb-4">
 
         <div class="col-md-4 mb-3">
             <div class="info-card">
-                <div class="icon-box bg-green">
+
+                <div class="info-icon">
                     <i class="fas fa-check"></i>
                 </div>
-                <small>Status Tes</small>
-                <h6 class="mt-1">
-                    {{ isset($top3) ? 'Sudah Tes' : 'Belum Tes' }}
-                </h6>
+
+                <div>
+                    <div class="info-label">Status Tes</div>
+
+                    <div class="info-value">
+                        {{ isset($top3) ? 'Sudah Tes' : 'Belum Tes' }}
+                    </div>
+                </div>
+
             </div>
         </div>
 
         <div class="col-md-4 mb-3">
             <div class="info-card">
-                <div class="icon-box bg-blue">
+
+                <div class="info-icon">
                     <i class="fas fa-briefcase"></i>
                 </div>
-                <small>Karier Teratas</small>
-                <h6 class="mt-1">
-                    {{ $topKarirList[0]->okupasi->nama_okupasi ?? '-' }}
-                </h6>
+
+                <div>
+                    <div class="info-label">Karier Teratas</div>
+
+                    <div class="info-value" style="font-size:24px;">
+                        {{ $topKarirList[0]->okupasi->nama_okupasi ?? '-' }}
+                    </div>
+                </div>
+
             </div>
         </div>
 
         <div class="col-md-4 mb-3">
             <div class="info-card">
-                <div class="icon-box bg-orange">
-                    <i class="fas fa-chart-line"></i>
+
+                <div class="info-icon">
+                    <i class="fas fa-chart-bar"></i>
                 </div>
-                <small>Skor</small>
-                <h6 class="mt-1">
-                    {{ $topSkor ?? '-' }}%
-                </h6>
+
+                <div>
+                    <div class="info-label">Skor Tertinggi</div>
+
+                    <div class="info-value">
+                        {{ $topSkor ?? '0' }}%
+                    </div>
+                </div>
+
             </div>
         </div>
 
     </div>
 
+    <!-- CONTENT -->
     <div class="row">
 
         <!-- LEFT -->
-        <div class="col-md-12">
+        <div class="col-lg-5 mb-4">
 
-            <!-- CARA PAKAI -->
             <div class="section-card">
-                <div class="section-title">Panduan Penggunaan</div>
 
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-text">
-                        <b>Mulai Tes Kompetensi</b><br>
-                        <small>
-                            Tekan tombol <i>Mulai Tes</i> untuk memulai proses screening.
-                        </small>
-                    </div>
+                <div class="section-title">
+                    Panduan Penggunaan Sistem
                 </div>
 
                 <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-text">
-                        <b>Jawab Seluruh Pertanyaan</b><br>
-                        <small>
-                            Isi setiap pertanyaan sesuai kemampuan dan pemahaman Anda.
-                        </small>
+
+                    <div class="step-left">
+                        <div class="step-number">1</div>
+                        <div class="step-line"></div>
                     </div>
+
+                    <div>
+                        <div class="step-title">Mulai Tes Kompetensi</div>
+
+                        <div class="step-desc">
+                            Klik tombol "Mulai Tes" untuk membuka modul evaluasi awal.
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-text">
-                        <b>Proses Perhitungan Sistem</b><br>
-                        <small>
-                            Sistem akan menghitung skor dan mencocokkan hasil dengan bidang karier yang sesuai.
-                        </small>
+
+                    <div class="step-left">
+                        <div class="step-number" style="background:#dbeafe;color:#0f172a;">2</div>
+                        <div class="step-line"></div>
                     </div>
+
+                    <div>
+                        <div class="step-title">Jawab Pertanyaan Screening</div>
+
+                        <div class="step-desc">
+                            Berikan jawaban jujur mengenai preferensi dan minat kerja Anda.
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-text">
-                        <b>Lihat Rekomendasi Karier</b><br>
-                        <small>
-                            Hasil rekomendasi karier terbaik akan ditampilkan berdasarkan skor tertinggi.
-                        </small>
+
+                    <div class="step-left">
+                        <div class="step-number" style="background:#dbeafe;color:#0f172a;">3</div>
+                        <div class="step-line"></div>
                     </div>
+
+                    <div>
+                        <div class="step-title">Sistem Memproses Hasil</div>
+
+                        <div class="step-desc">
+                            Algoritma sistem akan menganalisis data Anda secara real-time.
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="step mb-0">
-                    <div class="step-number">5</div>
-                    <div class="step-text">
-                        <b>Evaluasi dan Pengembangan</b><br>
-                        <small>
-                            Gunakan hasil rekomendasi sebagai acuan untuk mengembangkan kemampuan Anda.
-                        </small>
+                <div class="step">
+
+                    <div class="step-left">
+                        <div class="step-number" style="background:#dbeafe;color:#0f172a;">4</div>
+                        <div class="step-line"></div>
                     </div>
+
+                    <div>
+                        <div class="step-title">Lihat Rekomendasi Karier</div>
+
+                        <div class="step-desc">
+                            Dapatkan daftar karier yang paling sesuai dengan kemampuan Anda.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="step">
+
+                    <div class="step-left">
+                        <div class="step-number" style="background:#dbeafe;color:#0f172a;">5</div>
+                    </div>
+
+                    <div>
+                        <div class="step-title">Evaluasi dan Pengembangan Diri</div>
+
+                        <div class="step-desc">
+                            Gunakan hasil rekomendasi sebagai acuan pengembangan skill.
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
 
-            <!-- HASIL -->
-            <div class="section-card">
-                <div class="section-title">Rekomendasi Terakhir</div>
+        </div>
 
-                @if (isset($top3) && $top3->count() > 0)
-                    @foreach ($top3 as $index => $item)
+        <!-- RIGHT -->
+        <div class="col-lg-7 mb-4">
+
+            <div class="section-card">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <div class="section-title mb-0">
+                        Rekomendasi Terakhir
+                    </div>
+
+                    <a href="#" class="text-dark font-weight-medium">
+                        Lihat Semua
+                    </a>
+
+                </div>
+
+                @if(isset($top3) && $top3->count() > 0)
+
+                    @foreach($top3 as $index => $item)
+
                         <div class="job-item">
-                            <div>
-                                <b>{{ $index + 1 }}. {{ $item->okupasi->nama_okupasi }}</b>
+
+                            <div class="job-name">
+                                {{ $index + 1 }}. {{ $item->okupasi->nama_okupasi }}
                             </div>
-                            <div class="text-primary">
-                                {{ number_format($item->skor, 1) }}%
+
+                            <div class="job-score">
+                                {{ number_format($item->skor,1) }}%
                             </div>
+
                         </div>
+
                     @endforeach
 
                     <small class="text-muted">
                         Terakhir tes: {{ $tanggalTes ?? '-' }}
                     </small>
+
                 @else
-                    <div class="text-center">
-                        <p class="text-muted">Belum ada hasil tes</p>
-                        <a href="{{ route('screening.index') }}" class="btn btn-primary btn-sm">
-                            Mulai Tes
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            <i class="far fa-folder-open"></i>
+                        </div>
+
+                        <div class="empty-title">
+                            Belum ada hasil tes
+                        </div>
+
+                        <div class="empty-text">
+                            Anda belum memiliki riwayat tes kompetensi.
+                            Ambil tes pertama Anda untuk melihat rekomendasi karier yang dipersonalisasi.
+                        </div>
+
+                        <a href="{{ route('screening.index') }}"
+                           class="btn btn-dark-custom">
+                            Mulai Tes Sekarang
                         </a>
+
                     </div>
+
                 @endif
 
             </div>
@@ -282,8 +539,6 @@
 
     </div>
 
-    </div>
-
-    </div>
+</div>
 
 @endsection
