@@ -13,11 +13,10 @@ class DashboardMahasiswaController extends Controller
     public function mahasiswa()
     {
         $user = Auth::user();
-
         $hasilTes = HasilTesModel::where('id_pengguna', $user->id_pengguna)
             ->latest()
             ->first();
-
+            
         // DEFAULT VALUE
         $topKarirList = collect();
         $topSkor = null;

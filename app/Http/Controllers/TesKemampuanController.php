@@ -12,7 +12,6 @@ use App\Models\HasilRekomendasiModel;
 
 class TesKemampuanController extends Controller
 {
-    // STEP 1: tampilkan area fungsi
     public function index()
     {
         $areaFungsi = AreaFungsiModel::all();
@@ -24,31 +23,25 @@ class TesKemampuanController extends Controller
 
         return view('tes_kemampuan.index', compact('areaFungsi', 'breadcrumb'));
     }
-
     // STEP 2: tampilkan cluster skill berdasarkan area
     public function cluster($id_area)
     {
         $area = AreaFungsiModel::findOrFail($id_area);
-
         $cluster = ClusterSkillModel::where('id_area_fungsi', $id_area)->get();
-
         $breadcrumb = (object)[
             'title' => 'Pilih Cluster Skill',
             'list' => ['Home', 'Tes Kemampuan', $area->nama_area_fungsi]
         ];
-
         return view('tes_kemampuan.cluster', compact('cluster', 'area', 'breadcrumb'));
     }
 public function soal($id_cluster)
 {
     $cluster = ClusterSkillModel::with('okupasi.kompetensi')->findOrFail($id_cluster);
-
     $kompetensi = $cluster->okupasi
         ->flatMap(function ($okupasi) {
             return $okupasi->kompetensi;
         })
         ->unique('id_kompetensi');
-
     return view('tes_kemampuan.soal', compact('cluster', 'kompetensi'));
 }
     // proses jawaban
@@ -56,7 +49,6 @@ public function soal($id_cluster)
 {
     $jawaban = $request->input('jawaban');
     $id_cluster = $request->id_cluster;
-
     $user = Auth::user();
 
     // 1. SIMPAN HASIL TES
