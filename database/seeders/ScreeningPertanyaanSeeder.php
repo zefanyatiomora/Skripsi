@@ -7,134 +7,91 @@ use Illuminate\Support\Facades\DB;
 
 class ScreeningPertanyaanSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         DB::table('screening_pertanyaan')->insert([
 
-            [
-                'id_pertanyaan' => 1,
-                'pertanyaan' => 'Saya tertarik membuat tampilan website atau aplikasi yang menarik'
-            ],
-            [
-                'id_pertanyaan' => 2,
-                'pertanyaan' => 'Saya suka membuat fitur dan logika pada website'
-            ],
-            [
-                'id_pertanyaan' => 3,
-                'pertanyaan' => 'Saya tertarik mengembangkan aplikasi Android atau iOS'
-            ],
-            [
-                'id_pertanyaan' => 4,
-                'pertanyaan' => 'Saya suka mencoba dan mengembangkan aplikasi mobile'
-            ],
-            [
-                'id_pertanyaan' => 5,
-                'pertanyaan' => 'Saya suka merancang dan membangun sistem perangkat lunak'
-            ],
-            [
-                'id_pertanyaan' => 6,
-                'pertanyaan' => 'Saya tertarik debugging dan memperbaiki error program'
-            ],
-            [
-                'id_pertanyaan' => 7,
-                'pertanyaan' => 'Saya tertarik mengelola dan merancang basis data'
-            ],
-            [
-                'id_pertanyaan' => 8,
-                'pertanyaan' => 'Saya suka mengolah data dan memastikan data tersimpan dengan baik'
-            ],
-            [
-                'id_pertanyaan' => 9,
-                'pertanyaan' => 'Saya suka menganalisis kebutuhan sistem atau bisnis'
-            ],
-            [
-                'id_pertanyaan' => 10,
-                'pertanyaan' => 'Saya tertarik menjadi penghubung antara kebutuhan bisnis dan teknologi'
-            ],
-            [
-                'id_pertanyaan' => 11,
-                'pertanyaan' => 'Saya suka membantu pengguna menyelesaikan masalah teknis komputer atau sistem'
-            ],
-            [
-                'id_pertanyaan' => 12,
-                'pertanyaan' => 'Saya tertarik melakukan instalasi, konfigurasi, atau pemeliharaan sistem TI'
-            ],
-            [
-                'id_pertanyaan' => 13,
-                'pertanyaan' => 'Saya tertarik mempelajari proses bisnis perusahaan melalui sistem ERP'
-            ],
-            [
-                'id_pertanyaan' => 14,
-                'pertanyaan' => 'Saya suka mengelola sistem perusahaan yang terintegrasi'
-            ],
-            [
-                'id_pertanyaan' => 15,
-                'pertanyaan' => 'Saya tertarik melakukan pengujian kualitas perangkat lunak'
-            ],
-            [
-                'id_pertanyaan' => 16,
-                'pertanyaan' => 'Saya suka mencari bug atau kesalahan pada aplikasi'
-            ],
-            [
-                'id_pertanyaan' => 17,
-                'pertanyaan' => 'Saya tertarik membuat atau mengembangkan teknologi multimedia'
-            ],
-            [
-                'id_pertanyaan' => 18,
-                'pertanyaan' => 'Saya suka desain multimedia, audio visual, atau teknologi interaktif'
-            ],
-            [
-                'id_pertanyaan' => 19,
-                'pertanyaan' => 'Saya tertarik keamanan sistem dan perlindungan data'
-            ],
-            [
-                'id_pertanyaan' => 20,
-                'pertanyaan' => 'Saya suka mempelajari risiko keamanan informasi'
-            ],
-            [
-                'id_pertanyaan' => 21,
-                'pertanyaan' => 'Saya tertarik melakukan audit atau evaluasi sistem informasi'
-            ],
-            [
-                'id_pertanyaan' => 22,
-                'pertanyaan' => 'Saya suka memeriksa kesesuaian prosedur dan pengelolaan TI'
-            ],
-            [
-                'id_pertanyaan' => 23,
-                'pertanyaan' => 'Saya tertarik perlindungan data pribadi dan privasi pengguna'
-            ],
-            [
-                'id_pertanyaan' => 24,
-                'pertanyaan' => 'Saya suka memastikan data pengguna dikelola dengan aman'
-            ],
-            [
-                'id_pertanyaan' => 25,
-                'pertanyaan' => 'Saya tertarik merancang struktur sistem atau teknologi organisasi'
-            ],
-            [
-                'id_pertanyaan' => 26,
-                'pertanyaan' => 'Saya suka membuat perencanaan teknologi jangka panjang'
-            ],
-            [
-                'id_pertanyaan' => 27,
-                'pertanyaan' => 'Saya tertarik mengelola proyek pengembangan sistem atau aplikasi'
-            ],
-            [
-                'id_pertanyaan' => 28,
-                'pertanyaan' => 'Saya suka mengatur tim dan pembagian pekerjaan dalam proyek TI'
-            ],
-            [
-                'id_pertanyaan' => 29,
-                'pertanyaan' => 'Saya tertarik memberikan solusi atau saran terkait teknologi informasi'
-            ],
-            [
-                'id_pertanyaan' => 30,
-                'pertanyaan' => 'Saya suka berdiskusi dan membantu menyelesaikan permasalahan TI pada organisasi'
-            ],
+            // =====================================
+            // 1. Frontend & UI Development
+            // =====================================
+            ['id_pertanyaan' => 1, 'pertanyaan' => 'Saya mampu membuat halaman web menggunakan HTML dan CSS.'],
+            ['id_pertanyaan' => 2, 'pertanyaan' => 'Saya mampu membuat tampilan web yang responsif di berbagai ukuran layar.'],
+            ['id_pertanyaan' => 3, 'pertanyaan' => 'Saya mampu memodifikasi tampilan website menggunakan JavaScript.'],
+            ['id_pertanyaan' => 4, 'pertanyaan' => 'Saya mampu mengubah desain antarmuka menjadi halaman web yang berfungsi.'],
 
+            // =====================================
+            // 2. Backend & API Development
+            // =====================================
+            ['id_pertanyaan' => 5, 'pertanyaan' => 'Saya mampu membuat REST API untuk pertukaran data antar aplikasi.'],
+            ['id_pertanyaan' => 6, 'pertanyaan' => 'Saya mampu menulis query SQL dan mengelola relasi database.'],
+            ['id_pertanyaan' => 7, 'pertanyaan' => 'Saya mampu mengimplementasikan autentikasi dan otorisasi pengguna.'],
+            ['id_pertanyaan' => 8, 'pertanyaan' => 'Saya terbiasa menggunakan framework backend seperti Laravel atau Express.js.'],
+
+
+            // =====================================
+            // 3. Web & Software Engineering
+            // =====================================
+            ['id_pertanyaan' => 9, 'pertanyaan' => 'Saya mampu membuat diagram atau dokumentasi perancangan sistem.'],
+            ['id_pertanyaan' => 10, 'pertanyaan' => 'Saya mampu merancang arsitektur aplikasi sebelum proses pengembangan.'],
+            ['id_pertanyaan' => 11, 'pertanyaan' => 'Saya mampu mengelola pengembangan aplikasi menggunakan Git.'],
+            ['id_pertanyaan' => 12, 'pertanyaan' => 'Saya mampu menyusun dokumentasi kebutuhan dan desain sistem.'],
+
+            // =====================================
+            // 4. Mobile Development
+            // =====================================
+            ['id_pertanyaan' => 13, 'pertanyaan' => 'Saya mampu membuat aplikasi Android atau iOS.'],
+            ['id_pertanyaan' => 14, 'pertanyaan' => 'Saya mampu menghubungkan aplikasi mobile dengan API.'],
+            ['id_pertanyaan' => 15, 'pertanyaan' => 'Saya mampu mengimplementasikan fitur GPS, kamera, atau notifikasi pada aplikasi mobile.'],
+            ['id_pertanyaan' => 16, 'pertanyaan' => 'Saya terbiasa melakukan pengujian aplikasi pada berbagai perangkat mobile.'],
+
+
+            // =====================================
+            // 5. Data, ERP & Information Management
+            // =====================================
+            ['id_pertanyaan' => 17, 'pertanyaan' => 'Saya mampu mengolah data menjadi laporan yang mendukung pengambilan keputusan.'],
+            ['id_pertanyaan' => 18, 'pertanyaan' => 'Saya mampu membuat query untuk menganalisis data dalam jumlah besar.'],
+            ['id_pertanyaan' => 19, 'pertanyaan' => 'Saya mampu memetakan proses bisnis suatu organisasi.'],
+            ['id_pertanyaan' => 20, 'pertanyaan' => 'Saya mampu mengelola struktur dan kualitas data organisasi.'],
+
+            // =====================================
+            // 6. Analysis & Consulting
+            // =====================================
+            ['id_pertanyaan' => 21, 'pertanyaan' => 'Saya mampu menggali kebutuhan pengguna melalui wawancara atau observasi.'],
+            ['id_pertanyaan' => 22, 'pertanyaan' => 'Saya mampu menerjemahkan kebutuhan bisnis menjadi kebutuhan sistem.'],
+            ['id_pertanyaan' => 23, 'pertanyaan' => 'Saya mampu membuat rekomendasi solusi berdasarkan hasil analisis.'],
+            ['id_pertanyaan' => 24, 'pertanyaan' => 'Saya mampu menyusun dokumen kebutuhan sistem secara terstruktur.'],
+
+            // =====================================
+            // 7. Infrastructure & Technical Support
+            // =====================================
+            ['id_pertanyaan' => 25, 'pertanyaan' => 'Saya mampu melakukan instalasi dan konfigurasi sistem operasi atau server.'],
+            ['id_pertanyaan' => 26, 'pertanyaan' => 'Saya mampu mengelola jaringan komputer dasar.'],
+            ['id_pertanyaan' => 27, 'pertanyaan' => 'Saya mampu mendiagnosis dan memperbaiki masalah teknis perangkat atau sistem.'],
+            ['id_pertanyaan' => 28, 'pertanyaan' => 'Saya mampu memantau kinerja dan ketersediaan layanan TI.'],
+
+            // =====================================
+            // 8. Quality Assurance & Multimedia
+            // =====================================
+            ['id_pertanyaan' => 29, 'pertanyaan' => 'Saya mampu menyusun skenario pengujian aplikasi.'],
+            ['id_pertanyaan' => 30, 'pertanyaan' => 'Saya mampu menemukan bug berdasarkan hasil pengujian sistem.'],
+            ['id_pertanyaan' => 31, 'pertanyaan' => 'Saya mampu membuat atau mengolah konten multimedia digital.'],
+            ['id_pertanyaan' => 32, 'pertanyaan' => 'Saya mampu memastikan aplikasi memenuhi kebutuhan pengguna sebelum dirilis.'],
+
+            // =====================================
+            // 9. Governance, Risk & Security
+            // =====================================
+            ['id_pertanyaan' => 33, 'pertanyaan' => 'Saya mampu mengidentifikasi risiko keamanan informasi.'],
+            ['id_pertanyaan' => 34, 'pertanyaan' => 'Saya mampu melakukan analisis dampak kebocoran data.'],
+            ['id_pertanyaan' => 35, 'pertanyaan' => 'Saya mampu memeriksa kepatuhan sistem terhadap regulasi atau kebijakan.'],
+            ['id_pertanyaan' => 36, 'pertanyaan' => 'Saya mampu menyusun rekomendasi pengendalian risiko TI.'],
+
+            // =====================================
+            // 10. Architecture & Product Management
+            // =====================================
+            ['id_pertanyaan' => 37, 'pertanyaan' => 'Saya mampu menyusun backlog dan prioritas pengembangan produk.'],
+            ['id_pertanyaan' => 38, 'pertanyaan' => 'Saya mampu mengelola pekerjaan tim menggunakan metode Agile atau Scrum.'],
+            ['id_pertanyaan' => 39, 'pertanyaan' => 'Saya mampu merancang arsitektur bisnis atau teknologi organisasi.'],
+            ['id_pertanyaan' => 40, 'pertanyaan' => 'Saya mampu menyusun roadmap pengembangan produk atau sistem.'],
         ]);
     }
 }
