@@ -33,7 +33,14 @@ Route::post('/register', [LoginController::class, 'register']);
 Route::post('/logout', [LoginController::class, 'logout'])
     ->name('logout');
 
+Route::get('/forgot-password', [LoginController::class, 'showForgotPassword'])
+    ->name('forgot.password');
 
+Route::post('/forgot-password', [LoginController::class, 'checkEmail'])
+    ->name('forgot.password.check');
+
+Route::post('/reset-password', [LoginController::class, 'resetPassword'])
+    ->name('reset.password');
 /*
 |--------------------------------------------------------------------------
 | PROTECTED ROUTES
@@ -81,16 +88,10 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::get(
-        '/screening',
-        [ScreeningController::class, 'index']
-    )->name('screening.index');
-
-    Route::post(
-        '/screening/submit',
-        [ScreeningController::class, 'submit']
-    )->name('screening.submit');
-
+    Route::get('/screening', [ScreeningController::class, 'index'])->name('screening.index');
+    Route::post('/screening/get-cluster', [ScreeningController::class, 'getCluster']);
+    Route::post('/screening/soal', [ScreeningController::class, 'soal'])->name('screening.soal');
+    Route::post('/screening/submit', [ScreeningController::class, 'submit'])->name('screening.submit');
 
     /*
     |--------------------------------------------------------------------------
@@ -99,10 +100,9 @@ Route::middleware('auth')->group(function () {
     */
 
     Route::get(
-        '/tes-kemampuan/cluster/{id_cluster}',
+        '/tes-kemampuan/soal',
         [TesKemampuanController::class, 'soal']
     )->name('tes.kemampuan.soal');
-
     Route::post(
         '/tes-kemampuan/submit',
         [TesKemampuanController::class, 'submit']
@@ -119,6 +119,8 @@ Route::middleware('auth')->group(function () {
         '/pengguna',
         [PenggunaController::class, 'index']
     )->name('pengguna.index');
+    Route::get('/pengguna/{id}', [PenggunaController::class, 'show'])
+        ->name('pengguna.show');
 
 
     /*
