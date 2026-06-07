@@ -15,40 +15,48 @@ class OkupasiController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->search;
-
-        $okupasi = OkupasiModel::with([
+        $query = OkupasiModel::with([
             'clusterSkill',
-            'areaFungsi',
-            'kompetensi'
-        ])
-            ->when($search, function ($query) use ($search) {
-                $query->where('kode_okupasi', 'like', "%{$search}%")
-                    ->orWhere('nama_okupasi', 'like', "%{$search}%");
-            })
-            ->latest()
+            'areaFungsi'
+        ]);
+
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('kode_okupasi', 'like', '%' . $request->search . '%')
+                    ->orWhere('nama_okupasi', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        // Filter Area Fungsi
+        if ($request->filled('area_fungsi')) {
+            $query->where('id_area_fungsi', $request->area_fungsi);
+        }
+
+        $okupasi = $query->get();
+
+        $areaFungsi = AreaFungsiModel::orderBy('nama_area_fungsi')
             ->get();
 
-        return view(
-            'admin.okupasi.index',
-            compact('okupasi', 'search')
-        );
+        return view('admin.okupasi.index', compact(
+            'okupasi',
+            'areaFungsi'
+        ));
     }
     /**
      * FORM TAMBAH OKUPASI
      */
     public function create()
     {
-        $clusterSkill = ClusterSkillModel::with('areaFungsi')->get();
-
-        $kompetensi = KompetensiModel::all();
+        $clusterSkill = ClusterSkillModel::all();
+        $areaFungsi   = AreaFungsiModel::all();
+        $kompetensi   = KompetensiModel::orderBy('kode_kompetensi')->get();
 
         return view('admin.okupasi.create', compact(
             'clusterSkill',
+            'areaFungsi',
             'kompetensi'
         ));
     }
-
     /**
      * SIMPAN DATA OKUPASI
      */
@@ -56,11 +64,13 @@ class OkupasiController extends Controller
     {
         $validated = $request->validate([
             'kode_okupasi' => 'required|unique:okupasi,kode_okupasi',
-
             'nama_okupasi' => 'required',
 
             'id_cluster_skill' =>
             'required|exists:cluster_skill,id_cluster_skill',
+
+            'id_area_fungsi' =>
+            'required|exists:area_fungsi,id_area_fungsi',
 
             'kompetensi' =>
             'required|array|min:1',
@@ -81,7 +91,7 @@ class OkupasiController extends Controller
                 'kode_okupasi' => $validated['kode_okupasi'],
                 'nama_okupasi' => $validated['nama_okupasi'],
                 'id_cluster_skill' => $validated['id_cluster_skill'],
-                'id_area_fungsi' => $cluster->id_area_fungsi,
+                'id_area_fungsi' => $validated['id_area_fungsi'],
                 'deskripsi' => $validated['deskripsi'] ?? null,
             ]);
 
@@ -108,13 +118,16 @@ class OkupasiController extends Controller
             'areaFungsi'
         ])->findOrFail($id);
 
-        $clusterSkill = ClusterSkillModel::with('areaFungsi')->get();
+        $clusterSkill = ClusterSkillModel::all();
+
+        $areaFungsi = AreaFungsiModel::all();
 
         $kompetensi = KompetensiModel::all();
 
         return view('admin.okupasi.edit', compact(
             'okupasi',
             'clusterSkill',
+            'areaFungsi',
             'kompetensi'
         ));
     }
@@ -125,22 +138,21 @@ class OkupasiController extends Controller
     {
         $request->validate([
             'kode_okupasi' => 'required',
-
             'nama_okupasi' => 'required',
 
             'id_cluster_skill' =>
             'required|exists:cluster_skill,id_cluster_skill',
 
-            'kompetensi' => 'required|array|min:1',
+            'id_area_fungsi' =>
+            'required|exists:area_fungsi,id_area_fungsi',
+
+            'kompetensi' =>
+            'required|array|min:1',
 
             'kompetensi.*' =>
             'exists:kompetensi,id_kompetensi',
 
             'deskripsi' => 'nullable'
-
-        ], [
-            'kompetensi.required' =>
-            'Minimal pilih satu kompetensi.'
         ]);
 
         try {
@@ -155,7 +167,7 @@ class OkupasiController extends Controller
                 'kode_okupasi'     => trim($request->kode_okupasi),
                 'nama_okupasi'     => trim($request->nama_okupasi),
                 'id_cluster_skill' => $request->id_cluster_skill,
-                'id_area_fungsi'   => $cluster->id_area_fungsi,
+                'id_area_fungsi'   => $request->id_area_fungsi,
                 'deskripsi'        => $request->deskripsi,
             ]);
 
@@ -205,7 +217,7 @@ class OkupasiController extends Controller
         $okupasi->kompetensi()->detach();
         // HAPUS DATA
         $okupasi->delete();
-        
+
         return redirect()
             ->route('okupasi.index')
             ->with('success', 'Data okupasi berhasil dihapus');
