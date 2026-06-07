@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\AreaFungsiModel;
 
 class ClusterSkillModel extends Model
 {
@@ -12,21 +11,26 @@ class ClusterSkillModel extends Model
 
     protected $table = 'cluster_skill';
     protected $primaryKey = 'id_cluster_skill';
-    protected $fillable = [
-        'id_area_fungsi',
-        'nama_cluster',
-    ];
 
-    public function areaFungsi() {
-        return $this->belongsTo(AreaFungsiModel::class, 'id_area_fungsi', 'id_area_fungsi');
+    protected $fillable = [
+        'id_domain',
+        'nama_cluster',
+        'deskripsi'
+    ];
+    public function domain()
+    {
+        return $this->belongsTo(
+            DomainModel::class,
+            'id_domain',
+            'id_domain'
+        );
     }
     public function okupasi()
-{
-    return $this->hasMany(
-        OkupasiModel::class,
-        'id_cluster_skill',      // FK di tabel okupasi
-        'id_cluster_skill'       // PK di cluster
-    );
-}
-
+    {
+        return $this->hasMany(
+            OkupasiModel::class,
+            'id_cluster_skill',
+            'id_cluster_skill'
+        );
+    }
 }

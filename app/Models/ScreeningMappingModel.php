@@ -11,7 +11,7 @@ class ScreeningMappingModel extends Model
 
     protected $table = 'screening_mapping';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_mapping';
 
     protected $fillable = [
         'id_pertanyaan',
@@ -37,4 +37,5 @@ class ScreeningMappingModel extends Model
             'id_cluster_skill'
         );
     }
+    
 }

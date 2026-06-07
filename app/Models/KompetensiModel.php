@@ -15,7 +15,8 @@ class KompetensiModel extends Model
 
     protected $fillable = [
         'kode_kompetensi',
-        'kompetensi'
+        'kompetensi',
+        'pertanyaan_kompetensi'
     ];
 
     public function okupasi()
