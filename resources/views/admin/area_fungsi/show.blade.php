@@ -1,126 +1,261 @@
 @extends('layouts.template')
 
 @section('content')
+    <style>
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
 
-<style>
-    body{
-        background:#f4f7fb;
-        font-family:'Poppins',sans-serif;
-    }
+        .btn-back {
+            background: #0f172a;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 12px 20px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: .2s;
+        }
 
-    .page-wrapper{
-        padding:20px;
-    }
+        .btn-back:hover {
+            background: #1e293b;
+            color: white;
+            text-decoration: none;
+        }
 
-    .page-header{
-        margin-bottom:20px;
-    }
+        @media(max-width:768px) {
 
-    .page-title{
-        font-size:26px;
-        font-weight:700;
-        color:#0f172a;
-        margin-bottom:4px;
-    }
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
 
-    .page-subtitle{
-        font-size:14px;
-        color:#64748b;
-    }
+        .page-wrapper {
+            padding: 20px;
+        }
 
-    .detail-card{
-        background:#fff;
-        border-radius:18px;
-        border:1px solid #e5e7eb;
-        padding:24px;
-        box-shadow:0 4px 12px rgba(0,0,0,.04);
-    }
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 2px;
+        }
 
-    .summary-card{
-        background:linear-gradient(135deg,#2563eb,#1d4ed8);
-        color:white;
-        border-radius:16px;
-        padding:18px 22px;
-        margin-bottom:20px;
-    }
+        .page-subtitle {
+            color: #64748b;
+            font-size: 13px;
+        }
 
-    .summary-label{
-        font-size:13px;
-        opacity:.9;
-    }
+        .summary-card {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 16px;
+            padding: 18px 24px;
+            color: white;
+            margin-bottom: 20px;
+        }
 
-    .summary-value{
-        font-size:28px;
-        font-weight:700;
-    }
+        .summary-title {
+            font-size: 12px;
+            opacity: .85;
+        }
 
-    .info-card{
-        background:#f8fafc;
-        border:1px solid #e2e8f0;
-        border-radius:14px;
-        padding:18px;
-        height:100%;
-    }
+        .summary-value {
+            font-size: 26px;
+            font-weight: 700;
+            margin-top: 2px;
+        }
 
-    .info-label{
-        font-size:12px;
-        color:#64748b;
-        margin-bottom:6px;
-        text-transform:uppercase;
-        letter-spacing:.5px;
-    }
+        .detail-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 24px;
+            border: 1px solid #edf2f7;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .03);
+        }
 
-    .info-value{
-        font-size:15px;
-        font-weight:600;
-        color:#0f172a;
-    }
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 14px;
+        }
 
-    .description-box{
-        background:#f8fafc;
-        border:1px solid #e2e8f0;
-        border-radius:14px;
-        padding:18px;
-        color:#334155;
-        line-height:1.8;
-    }
+        .info-card {
+            background: #fafbfd;
+            border: 1px solid #edf2f7;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+        }
 
-    .section-title{
-        font-size:17px;
-        font-weight:700;
-        color:#0f172a;
-        margin-bottom:15px;
-    }
+        .info-label {
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-bottom: 4px;
+        }
 
-    .btn-back{
-        background:#f1f5f9;
-        color:#334155;
-        border:none;
-        border-radius:12px;
-        padding:10px 20px;
-        font-weight:600;
-    }
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+        }
 
-    .btn-back:hover{
-        background:#e2e8f0;
-        color:#0f172a;
-    }
-</style>
+        .badge-cluster,
+        .badge-area {
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .description-box {
+            background: #fafbfd;
+            border: 1px solid #edf2f7;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #475569;
+        }
+
+        .kompetensi-card {
+            background: #ffffff;
+            border: 1px solid #edf2f7;
+            border-radius: 12px;
+            padding: 14px;
+            transition: .2s;
+        }
+
+        .kompetensi-card:hover {
+            border-color: #bfdbfe;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, .05);
+        }
+
+        .kompetensi-kode {
+            display: inline-block;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .kompetensi-nama {
+            font-size: 13px;
+            font-weight: 500;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        .btn-back {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #475569;
+            border-radius: 10px;
+            padding: 9px 16px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .btn-back:hover {
+            background: #f1f5f9;
+        }
+
+        .detail-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .03);
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            width: 220px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .detail-value {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .badge-role {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-admin {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-mahasiswa {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        @media(max-width:768px) {
+
+            .detail-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+
+            .detail-label {
+                width: 100%;
+            }
+
+        }
+    </style>
 
 <div class="container-fluid page-wrapper">
 
-    <!-- Header -->
-    <div class="page-header">
+        <div class="page-header">
 
-        <div class="page-title">
-            Detail Area Fungsi
+            <div>
+                <div class="page-title">
+                    Detail Area Fungsi
+                </div>
+
+                <div class="page-subtitle">
+                    Informasi lengkap data area fungsi
+                </div>
+            </div>
+
+            <a href="{{ route('area-fungsi.index') }}" class="btn-back">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Kembali
+            </a>
+
         </div>
-
-        <div class="page-subtitle">
-            Informasi lengkap area fungsi
-        </div>
-
-    </div>
 
     <!-- Summary -->
     <div class="summary-card">
@@ -189,18 +324,6 @@
                 {{ $areaFungsi->deskripsi ?: 'Tidak ada deskripsi.' }}
 
             </div>
-
-        </div>
-
-        <div class="mt-4">
-
-            <a href="{{ route('area-fungsi.index') }}"
-               class="btn btn-back">
-
-                <i class="fas fa-arrow-left me-2"></i>
-                Kembali
-
-            </a>
 
         </div>
 

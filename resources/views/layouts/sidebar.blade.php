@@ -5,7 +5,7 @@
                 {{-- =========================
                     SIDEBAR ADMIN
                 ========================== --}}
-                @if (Auth::user()->role == 'admin')
+                @if(Auth::check() && Auth::user()->role == 'admin')
                     <!-- DASHBOARD ADMIN -->
                     <li class="nav-item">
                         <a href="{{ route('dashboard.admin') }}"

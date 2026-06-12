@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ClusterSkillModel;
+use App\Models\DomainModel;
 use Illuminate\Validation\Rule;
 
 class ClusterSkillController extends Controller
@@ -34,18 +35,25 @@ class ClusterSkillController extends Controller
 
     public function create()
     {
-        return view('admin.cluster_skill.create');
+        $domain = DomainModel::all();
+
+        return view(
+            'admin.cluster_skill.create',
+            compact('domain')
+        );
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'id_domain' => 'required',
             'nama_cluster' =>
-                'required|unique:cluster_skill,nama_cluster',
+            'required|unique:cluster_skill,nama_cluster',
             'deskripsi' => 'nullable'
         ]);
 
         ClusterSkillModel::create([
+            'id_domain' => $request->id_domain,
             'nama_cluster' => $request->nama_cluster,
             'deskripsi' => $request->deskripsi
         ]);
@@ -62,15 +70,21 @@ class ClusterSkillController extends Controller
     {
         $clusterSkill = ClusterSkillModel::findOrFail($id);
 
+        $domain = DomainModel::all();
+
         return view(
             'admin.cluster_skill.edit',
-            compact('clusterSkill')
+            compact(
+                'clusterSkill',
+                'domain'
+            )
         );
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
+            'id_domain' => 'required',
             'nama_cluster' => [
                 'required',
                 Rule::unique(
@@ -80,13 +94,13 @@ class ClusterSkillController extends Controller
                     $id,
                     'id_cluster_skill'
                 )
-            ],
-            'deskripsi' => 'nullable'
+            ]
         ]);
 
         $clusterSkill = ClusterSkillModel::findOrFail($id);
 
         $clusterSkill->update([
+            'id_domain' => $request->id_domain,
             'nama_cluster' => $request->nama_cluster,
             'deskripsi' => $request->deskripsi
         ]);

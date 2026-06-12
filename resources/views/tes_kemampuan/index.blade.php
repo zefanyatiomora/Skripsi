@@ -3,212 +3,38 @@
 @section('content')
     <style>
         body {
-            background: #f3f5f9;
+            background: #f4f7fb;
             font-family: 'Poppins', sans-serif;
-            color: #0f172a;
         }
 
-        /* ===== WRAPPER ===== */
-        .screening-wrapper {
-            max-width: 920px;
-            margin: auto;
-            padding-bottom: 30px;
-        }
-
-        /* ===== HEADER ===== */
-        .screening-header {
-            background: linear-gradient(90deg, #020817, #0f172a, #1e293b);
-            border-radius: 28px;
-            padding: 38px;
-            color: white;
-            margin-bottom: 28px;
-            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.14);
-        }
-
-        .screening-header h2 {
-            font-size: 30px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
-        .screening-header p {
-            margin: 0;
-            color: rgba(255, 255, 255, 0.82);
-            line-height: 1.9;
-            font-size: 15px;
+        /* ===== CONTAINER ===== */
+        .container-screening {
             max-width: 760px;
+            margin: auto;
         }
 
-        /* ===== INFO BOX ===== */
-        .info-box {
-            display: flex;
-            align-items: flex-start;
-            gap: 18px;
-
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-left: 5px solid #0f172a;
-
-            border-radius: 22px;
-            padding: 22px 24px;
-            margin-bottom: 30px;
-
-            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
-        }
-
-        .info-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            background: #eef2ff;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            color: #0f172a;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .info-content {
-            line-height: 1.9;
-            font-size: 14px;
-            color: #64748b;
-        }
-
-        .info-content b {
-            color: #111827;
-        }
-
-        /* ===== QUESTION CARD ===== */
-        .question-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 24px;
-            padding: 26px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
-            transition: .25s;
-        }
-
-        .question-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
-        }
-
-        /* ===== NUMBER ===== */
-        .question-number {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: #eef2ff;
-            color: #0f172a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            flex-shrink: 0;
-            font-size: 15px;
-        }
-
-        /* ===== QUESTION ===== */
-        .question-text {
-            font-size: 16px;
-            font-weight: 600;
-            color: #111827;
-            line-height: 1.8;
-        }
-
-        /* ===== OPTION ===== */
-        .option-wrapper {
-            display: flex;
-            gap: 16px;
-            margin-top: 22px;
-        }
-
-        .option-item {
-            flex: 1;
-        }
-
-        .option-item input {
-            display: none;
-        }
-
-        .option-label {
-            border: 1px solid #e5e7eb;
-            border-radius: 18px;
-            padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: .25s;
-            font-weight: 600;
-            color: #475569;
-            background: #ffffff;
-        }
-
-        .option-label:hover {
-            border-color: #cbd5e1;
-            background: #f8fafc;
-        }
-
-        .option-item input:checked+.option-label {
-            border: 2px solid #0f172a;
-            background: #f8fafc;
-            color: #0f172a;
-            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-        }
-
-        /* ===== BUTTON ===== */
-        .submit-btn {
-            border: none;
-            border-radius: 18px;
-            padding: 17px;
-            font-size: 15px;
-            font-weight: 700;
-            background: #020817;
-            color: white;
-            transition: .25s;
-            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
-        }
-
-        .submit-btn:hover {
-            background: #111827;
-            transform: translateY(-2px);
-            color: white;
-        }
-
-        /* ===== TOP PROGRESS ===== */
+        /* ===== PROGRESS ===== */
         .top-progress-wrapper {
-            margin-bottom: 24px;
+            margin-bottom: 18px;
         }
 
         .progress-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
+            margin-bottom: 8px;
         }
 
         .progress-step {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: .8px;
             color: #64748b;
             text-transform: uppercase;
         }
 
-        .progress-page {
-            font-size: 13px;
-            color: #94a3b8;
-            font-weight: 500;
-        }
-
         .custom-progress {
-            height: 8px;
+            height: 6px;
             border-radius: 999px;
             background: #e2e8f0;
             overflow: hidden;
@@ -216,138 +42,243 @@
 
         .custom-bar {
             background: linear-gradient(90deg, #020817, #0f172a, #1e293b);
-            border-radius: 999px;
         }
 
-        /* ===== MOBILE ===== */
-        @media(max-width:768px) {
+        /* ===== TITLE ===== */
+        .title-main {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 10px;
+            margin-bottom: 18px;
+        }
 
-            .screening-header {
-                padding: 28px 24px;
-                border-radius: 24px;
-            }
+        .subtitle {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
 
-            .screening-header h2 {
-                font-size: 24px;
-            }
+        /* ===== CARD ===== */
+        .main-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .04);
+        }
 
-            .screening-header p {
-                font-size: 14px;
-            }
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
 
-            .info-box {
-                flex-direction: column;
-                padding: 20px;
-            }
+        /* ===== ALERT ===== */
+        .alert-info-screening {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
 
-            .option-wrapper {
-                flex-direction: column;
-            }
+        .focus-warning {
+            background: #fff7ed;
+            border: 1px solid #fdba74;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
+        }
 
-            .question-card {
-                padding: 22px;
-            }
+        .focus-warning-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .focus-warning-text {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* ===== OPTION ===== */
+        .option-item {
+            margin-bottom: 10px;
+        }
+
+        .option-item input {
+            display: none;
+        }
+
+        .option-label {
+            display: block;
+            border: 2px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: .2s;
+            background: white;
+        }
+
+        .option-label:hover {
+            border-color: #2563eb;
+        }
+
+        .option-item input:checked+.option-label {
+            border-color: #2563eb;
+            background: #eff6ff;
+            box-shadow: 0 3px 10px rgba(37, 99, 235, .06);
+        }
+
+        .option-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .option-desc {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+            line-height: 1.7;
+        }
+
+        .cluster-description {
+            font-size: 13px;
+            color: #334155;
+            line-height: 1.8;
+        }
+
+        /* ===== FOCUS HINT ===== */
+        .focus-hint {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #dbeafe;
+            font-size: 11px;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        /* ===== BUTTON ===== */
+        .btn-next {
+            background: #020817;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 12px;
+            width: 100%;
+            font-weight: 600;
+            font-size: 13px;
+            margin-top: 18px;
+            transition: .25s;
+        }
+
+        .btn-next:hover {
+            background: #111827;
         }
 
         /* ===== POPUP ===== */
-
         .popup-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.55);
-
+            inset: 0;
+            background: rgba(15, 23, 42, .55);
             display: none;
-
             align-items: center;
             justify-content: center;
-
             z-index: 9999;
         }
 
         .popup-box {
             background: white;
             width: 90%;
-            max-width: 420px;
-
-            border-radius: 28px;
-
-            padding: 32px 28px;
-
+            max-width: 360px;
+            border-radius: 20px;
+            padding: 24px;
             text-align: center;
-
-            animation: popupShow .25s ease;
         }
 
         .popup-icon {
-            width: 80px;
-            height: 80px;
-
-            margin: auto auto 18px;
-
+            width: 65px;
+            height: 65px;
+            margin: auto auto 14px;
             border-radius: 50%;
-
             background: #fee2e2;
-
             color: #dc2626;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
-            font-size: 34px;
+            font-size: 28px;
         }
 
         .popup-box h3 {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            margin-bottom: 12px;
             color: #0f172a;
+            margin-bottom: 8px;
         }
 
         .popup-box p {
+            font-size: 13px;
             color: #475569;
-            line-height: 1.8;
-            font-size: 15px;
-            margin-bottom: 24px;
+            line-height: 1.7;
+            margin-bottom: 18px;
         }
 
         .popup-btn {
             border: none;
             background: #020817;
             color: white;
-
-            padding: 13px 28px;
-
-            border-radius: 14px;
-
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-size: 13px;
             font-weight: 600;
-
-            transition: .25s;
         }
 
         .popup-btn:hover {
             background: #111827;
         }
 
-        @keyframes popupShow {
+        /* ===== UTILITY ===== */
+        .hidden {
+            display: none;
+        }
 
-            from {
-                transform: scale(.85);
-                opacity: 0;
+        @media(max-width:768px) {
+
+            .container-screening {
+                max-width: 100%;
             }
 
-            to {
-                transform: scale(1);
-                opacity: 1;
+            .title-main {
+                font-size: 20px;
             }
 
+            .main-card {
+                padding: 16px;
+            }
+
+            .section-title {
+                font-size: 15px;
+            }
+
+            .option-label {
+                padding: 12px;
+            }
+
+            .cluster-description {
+                font-size: 12px;
+            }
         }
     </style>
 
-    <!-- TOP BAR -->
+    <!-- PROGRESS -->
     <div class="top-progress-wrapper">
 
         <div class="progress-info">
@@ -361,217 +292,214 @@
         </div>
 
     </div>
-    <div class="container py-4">
 
-        <div class="screening-wrapper">
+    <div class="container-screening">
 
-            <!-- HEADER -->
-            <div class="screening-header">
+        <div class="title-main">
+            Screening Minat dan Kompetensi
+        </div>
 
-                <h2>
-                    Screening Minat dan Kecenderungan Karier TI
-                </h2>
-
-                <p>
-                    Jawablah setiap pertanyaan sesuai minat dan kecenderungan kemampuan Anda.
-                    Hasil screening akan digunakan untuk menentukan cluster skill dan
-                    area fungsi yang paling sesuai dengan profil Anda.
-                </p>
-
+        <!-- STEP 1 -->
+        <div class="main-card" id="step1">
+            <div class="section-title">
+                Aktivitas apa yang paling sering Anda lakukan, kuasai, atau sukai?
             </div>
 
-            <!-- INFO -->
-            <div class="info-box">
+            <div class="alert-info-screening">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Petunjuk:</strong>
+                Anda dapat memilih lebih dari satu pilihan (multiple choice).
+                Pilih aktivitas yang paling menggambarkan pengalaman, kegiatan,
+                atau bidang yang paling Anda minati.
+            </div>
+            @foreach ($domains as $d)
+                <div class="option-item">
 
-                <div class="info-icon">
-                    <i class="fas fa-info"></i>
+                    <input type="checkbox" id="domain{{ $d->id_domain }}" class="domain-checkbox"
+                        value="{{ $d->id_domain }}">
+
+                    <label for="domain{{ $d->id_domain }}" class="option-label">
+
+                        <div class="option-title">
+                            {{ $d->nama_domain }}
+                        </div>
+
+                    </label>
+
                 </div>
+            @endforeach
 
-                <div class="info-content">
+            <button type="button" class="btn-next" onclick="loadClusters()">
 
-                    <b>Petunjuk Pengisian</b><br>
+                Lanjut Pilih Cluster →
 
-                    Pilih <b>Ya</b> apabila Anda merasa tertarik atau memiliki
-                    kecenderungan pada aktivitas tersebut.
+            </button>
 
-                    Pilih <b>Tidak</b> apabila aktivitas tersebut tidak sesuai
-                    dengan minat atau kecenderungan Anda.
+        </div>
 
-                </div>
+        <!-- STEP 2 -->
+        <div class="main-card hidden" id="step2">
 
+            <div class="section-title">
+                Fokus atau Bidang yang Paling Sesuai dengan Anda
             </div>
 
-            <!-- FORM -->
-            <form action="{{ route('screening.submit') }}" method="POST" id="screeningForm" novalidate>
+            <!-- PETUNJUK -->
+            <div class="alert-info-screening">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Petunjuk:</strong>
+                Pilih fokus atau bidang yang paling menggambarkan pengalaman,
+                aktivitas, proyek, organisasi, pekerjaan, maupun minat yang Anda miliki.
+                Anda tetap dapat memilih lebih dari satu fokus jika diperlukan, namun
+                memilih satu fokus utama akan membantu sistem memberikan rekomendasi
+                yang lebih spesifik.
+            </div>
 
+            <form method="POST" action="{{ route('screening.soal') }}" id="clusterForm">
                 @csrf
 
-                @foreach ($questions as $q)
-                    <div class="question-card" id="question-{{ $loop->iteration }}">
+                <div id="clusterContainer"></div>
 
-                        <div class="d-flex gap-3 align-items-start">
-
-                            <div class="question-number">
-                                {{ $loop->iteration }}
-                            </div>
-
-                            <div class="question-text">
-                                {{ $q->pertanyaan }}
-                            </div>
-
-                        </div>
-
-                        <!-- OPTION -->
-                        <div class="option-wrapper">
-
-                            <!-- YA -->
-                            <label class="option-item">
-
-                                <input type="radio" name="jawaban[{{ $q->id_pertanyaan }}]" value="1">
-
-                                <div class="option-label">
-                                    Ya
-                                </div>
-
-                            </label>
-
-                            <!-- TIDAK -->
-                            <label class="option-item">
-
-                                <input type="radio" name="jawaban[{{ $q->id_pertanyaan }}]" value="0">
-
-                                <div class="option-label">
-                                    Tidak
-                                </div>
-
-                            </label>
-
-                        </div>
-
-                    </div>
-                @endforeach
-                <!-- POPUP -->
-                <div id="customPopup" class="popup-overlay">
-
-                    <div class="popup-box">
-
-                        <div class="popup-icon">
-                            <i class="fas fa-exclamation-circle"></i>
-                        </div>
-
-                        <h3>Peringatan</h3>
-
-                        <p id="popupMessage"></p>
-
-                        <button type="button" onclick="closePopup()" class="popup-btn">
-                            Oke
-                        </button>
-
-                    </div>
-
-                </div>
-                <!-- BUTTON -->
-                <div class="mt-4">
-
-                    <button type="submit" class="submit-btn w-100">
-
-                        Lihat Hasil Screening
-
-                    </button>
-
-                </div>
+                <button type="submit" class="btn-next">
+                    Mulai Tes Screening →
+                </button>
 
             </form>
 
         </div>
 
     </div>
+
+    </div>
+
     <script>
-        let firstUnanswered = null;
+        function loadClusters() {
 
-        document.addEventListener('DOMContentLoaded', function() {
+            let selected = [];
 
-            const form = document.getElementById('screeningForm');
+            document.querySelectorAll('.domain-checkbox:checked').forEach(el => {
+                selected.push(el.value);
+            });
 
-            form.addEventListener('submit', function(e) {
+            if (selected.length === 0) {
 
-                let unanswered = [];
+                showPopup(
+                    'Silakan pilih minimal <b>1 domain</b>'
+                );
 
-                @foreach ($questions as $q)
+                return;
+            }
 
-                    let checked{{ $q->id_pertanyaan }} =
-                        document.querySelector(
-                            'input[name="jawaban[{{ $q->id_pertanyaan }}]"]:checked'
-                        );
+            fetch("{{ url('/screening/get-cluster') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        id_domain: selected
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
 
-                    if (!checked{{ $q->id_pertanyaan }}) {
+                    let html = '';
 
-                        unanswered.push({{ $loop->iteration }});
+                    data.forEach(c => {
 
-                        document.getElementById(
-                            'question-{{ $loop->iteration }}'
-                        ).style.border = '2px solid #ef4444';
+                        if (!c.deskripsi) return;
 
-                    } else {
+                        html += `
+    <div class="option-item">
 
-                        document.getElementById(
-                            'question-{{ $loop->iteration }}'
-                        ).style.border = '1px solid #e5e7eb';
-                    }
-                @endforeach
+        <input type="checkbox"
+            id="cluster${c.id_cluster_skill}"
+            name="cluster_skill[]"
+            value="${c.id_cluster_skill}">
 
-                if (unanswered.length > 0) {
+        <label for="cluster${c.id_cluster_skill}"
+            class="option-label">
+
+            <div class="option-desc cluster-description">
+                ${c.deskripsi}
+            </div>
+
+        </label>
+
+    </div>
+    `;
+                    });
+
+
+                    document.getElementById('clusterContainer').innerHTML = html;
+
+                    document.getElementById('step1').classList.add('hidden');
+                    document.getElementById('step2').classList.remove('hidden');
+
+                    document.querySelector('.progress-bar').style.width = '66%';
+
+                    document.querySelector('.progress-step').innerHTML =
+                        'LANGKAH 2 DARI 3';
+
+                })
+                .catch(err => {
+
+                    console.error(err);
+                    alert('Gagal mengambil data cluster');
+
+                });
+
+        } // <-- PENUTUP function loadClusters()
+
+        function showPopup(message) {
+
+            document.getElementById('popupMessage').innerHTML = message;
+            document.getElementById('customPopup').style.display = 'flex';
+        }
+
+        function closePopup() {
+
+            document.getElementById('customPopup').style.display = 'none';
+        }
+
+        document.getElementById('clusterForm')
+            .addEventListener('submit', function(e) {
+
+                let totalCluster =
+                    document.querySelectorAll(
+                        'input[name="cluster_skill[]"]:checked'
+                    ).length;
+
+                if (totalCluster === 0) {
 
                     e.preventDefault();
 
-                    let message = '';
-
-                    if (unanswered.length == {{ count($questions) }}) {
-
-                        message =
-                            'Anda belum mengisi screening sama sekali.';
-
-                    } else {
-
-                        message =
-                            'Pertanyaan nomor <b>' +
-                            unanswered.join(', ') +
-                            '</b> belum dijawab.';
-                    }
-
-                    // simpan soal pertama yg belum dijawab
-                    firstUnanswered = unanswered[0];
-
-                    // tampilkan pesan popup
-                    document.getElementById('popupMessage').innerHTML = message;
-
-                    // tampilkan popup
-                    document.getElementById('customPopup').style.display = 'flex';
+                    showPopup(
+                        'Silakan pilih minimal <b>1 fokus/bidang</b> yang paling sesuai dengan diri Anda.'
+                    );
                 }
-
             });
+    </script>
+    <!-- POPUP -->
+    <div id="customPopup" class="popup-overlay">
 
-        });
-</script>
- <script>
-    function closePopup() {
+        <div class="popup-box">
 
-        // tutup popup
-        document.getElementById('customPopup').style.display = 'none';
+            <div class="popup-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
 
-        // kembali ke soal yang belum dijawab
-        if (firstUnanswered) {
+            <h3>Peringatan</h3>
 
-            const questionElement = document.getElementById(
-                'question-' + firstUnanswered
-            );
+            <p id="popupMessage"></p>
 
-            questionElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
+            <button type="button" onclick="closePopup()" class="popup-btn">
 
-        }
-    }
-</script>
+                Oke
+
+            </button>
+
+        </div>
+
+    </div>
 @endsection

@@ -53,8 +53,7 @@ class ProfileController extends Controller
     if ($request->filled('password')) {
         $data['password'] = Hash::make($request->password);
     }
-
-    // ✅ SEKARANG TIDAK MERAH LAGI
+    
     $user->update($data);
 
     return redirect()->route('profile.index')

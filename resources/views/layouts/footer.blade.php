@@ -1,51 +1,56 @@
-<footer class="main-footer">
-    <div class="float-right d-none d-sm-inline">
-        <b>Sistem Perencanaan Karir Mahasiswa Jurusan Teknologi Informasi</b> | Versi 1.0
+<footer class="main-footer
+{{ Auth::user()->role == 'mahasiswa' ? 'footer-full' : '' }}">
+    <div class="footer-left">
+        © {{ date('Y') }}
+        <strong>KompasKu</strong>
+        - Sistem Perencanaan Karier Mahasiswa
     </div>
 
-    <strong>&copy; 2024 <a href="#">Jurusan Teknologi Informasi Politeknik Negeri Malang</a>.</strong>
-    All rights reserved.
+    <div class="footer-right">
+        Jurusan Teknologi Informasi | Politeknik Negeri Malang
+    </div>
+
 </footer>
 
-<!-- CSS untuk Footer -->
 <style>
-    .main-footer {
-        bottom: 0; /* Menempel di bagian bawah layar */
-        left: 0;
-        width: 83%; /* Lebar footer */
-        height: 3.5%; /* Tinggi footer */
-        background-color: #11315F; /* Warna latar */
-        color: #ffffff; /* Warna teks */
-        border-top: 4px solid #F28C28; /* Garis atas */
-        font-size: 0.875rem;
-        z-index: 1000; /* Pastikan footer berada di atas elemen lain */
-        display: flex; /* Gunakan Flexbox */
-        align-items: center; /* Rata tengah secara vertikal */
-        justify-content: center; /* Rata tengah secara horizontal */
-        text-align: center; /* Rata tengah teks jika ada beberapa baris */
-        padding: 0 10px; /* Opsional: Tambahkan padding untuk jarak horizontal */
+.main-footer{
+    background:#ffffff;
+    border-top:1px solid #e5e7eb;
+    padding:16px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#64748b;
+    font-size:13px;
+    font-weight:500;
+    margin-left:260px; /* menyesuaikan sidebar admin */
+}
+
+.main-footer strong{
+    color:#0f172a;
+    font-weight:700;
+}
+
+.footer-right{
+    color:#94a3b8;
+}
+
+@media(max-width:768px){
+
+    .main-footer{
+        margin-left:0;
+        flex-direction:column;
+        gap:8px;
+        text-align:center;
+        padding:15px;
     }
 
-    .main-footer a {
-        color: #F9A826; 
-        text-decoration: none;
-    }
+}
+.main-footer{
+    margin-left:260px;
+}
 
-    .main-footer a:hover {
-        color: #ffffff;
-        text-decoration: underline;
-    }
-
-    .main-footer .fab {
-        font-size: 1.2rem;
-        transition: color 0.3s ease;
-    }
-
-    .main-footer .fab:hover {
-        color: #F28C28; 
-    }
-
+.footer-full{
+    margin-left:0 !important;
+}
 </style>
-
-<!-- FontAwesome Link -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">

@@ -34,11 +34,25 @@ class TesKemampuanController extends Controller
         ];
         return view('tes_kemampuan.cluster', compact('cluster', 'area', 'breadcrumb'));
     }
-    public function soal(Request $request)
+    public function soal()
     {
-        $clusterIds = explode(',', $request->cluster_ids);
+        $clusterIds = session(
+            'top_cluster_ids',
+            []
+        );
+
+        if (empty($clusterIds)) {
+
+            return redirect()
+                ->route('screening.index')
+                ->with(
+                    'error',
+                    'Silakan lakukan screening terlebih dahulu'
+                );
+        }
 
         $clusters = ClusterSkillModel::with([
+            'okupasi',
             'okupasi.kompetensi'
         ])
             ->whereIn(
@@ -159,14 +173,21 @@ class TesKemampuanController extends Controller
             }
         }
 
-        // Ranking terbesar
+        // Urutkan dari skor terbesar
         usort($hasil, function ($a, $b) {
             return $b['persen'] <=> $a['persen'];
         });
 
-        // Top 3 rekomendasi
-        $hasil = array_slice($hasil, 0, 3);
+        // Ambil skor tertinggi
+        $skorTertinggi = $hasil[0]['persen'] ?? 0;
 
+        // Ambil semua okupasi yang memiliki skor tertinggi
+        $hasil = array_filter($hasil, function ($item) use ($skorTertinggi) {
+            return $item['persen'] == $skorTertinggi;
+        });
+
+        // Reset index array
+        $hasil = array_values($hasil);
         // Kompetensi yang dijawab "Ya"
         $kompetensi = collect($kompetensiSummary)
             ->filter(function ($item) {

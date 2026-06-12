@@ -1,140 +1,292 @@
 @extends('layouts.template')
 
 @section('content')
+    <style>
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
 
-<style>
-    body{
-        background:#f4f7fb;
-        font-family:'Poppins',sans-serif;
-    }
+        .btn-back {
+            background: #0f172a;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 12px 20px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: .2s;
+        }
 
-    .page-wrapper{
-        padding:10px 5px 30px;
-    }
+        .btn-back:hover {
+            background: #1e293b;
+            color: white;
+            text-decoration: none;
+        }
 
-    .page-title{
-        font-size:30px;
-        font-weight:700;
-        color:#0f172a;
-        margin-bottom:5px;
-    }
+        @media(max-width:768px) {
 
-    .page-subtitle{
-        color:#64748b;
-        font-size:14px;
-        margin-bottom:25px;
-    }
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
 
-    .detail-card{
-        background:white;
-        border-radius:24px;
-        padding:32px;
-        border:1px solid #e5e7eb;
-        box-shadow:0 6px 18px rgba(0,0,0,.03);
-    }
+        .page-wrapper {
+            padding: 20px;
+        }
 
-    .detail-item{
-        margin-bottom:25px;
-    }
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 2px;
+        }
 
-    .detail-label{
-        font-size:13px;
-        color:#64748b;
-        font-weight:600;
-        margin-bottom:6px;
-    }
+        .page-subtitle {
+            color: #64748b;
+            font-size: 13px;
+        }
 
-    .detail-value{
-        font-size:16px;
-        font-weight:600;
-        color:#0f172a;
-    }
+        .summary-card {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 16px;
+            padding: 18px 24px;
+            color: white;
+            margin-bottom: 20px;
+        }
 
-    .badge-area{
-        background:#dbeafe;
-        color:#1d4ed8;
-        padding:8px 14px;
-        border-radius:50px;
-        display:inline-block;
-        font-size:13px;
-    }
+        .summary-title {
+            font-size: 12px;
+            opacity: .85;
+        }
 
-    .btn-back{
-        background:#f1f5f9;
-        color:#334155;
-        border:none;
-        border-radius:14px;
-        padding:12px 24px;
-        font-weight:600;
-    }
-</style>
+        .summary-value {
+            font-size: 26px;
+            font-weight: 700;
+            margin-top: 2px;
+        }
 
-<div class="container-fluid page-wrapper">
+        .detail-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 24px;
+            border: 1px solid #edf2f7;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .03);
+        }
 
-```
-<div class="page-title">
-    Detail Cluster Skill
-</div>
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 14px;
+        }
 
-<div class="page-subtitle">
-    Informasi lengkap cluster skill
-</div>
+        .info-card {
+            background: #fafbfd;
+            border: 1px solid #edf2f7;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+        }
 
-<div class="detail-card">
+        .info-label {
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-bottom: 4px;
+        }
 
-    <div class="detail-item">
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+        }
 
-        <div class="detail-label">
-            ID Cluster Skill
+        .badge-cluster,
+        .badge-area {
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .description-box {
+            background: #fafbfd;
+            border: 1px solid #edf2f7;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #475569;
+        }
+
+        .kompetensi-card {
+            background: #ffffff;
+            border: 1px solid #edf2f7;
+            border-radius: 12px;
+            padding: 14px;
+            transition: .2s;
+        }
+
+        .kompetensi-card:hover {
+            border-color: #bfdbfe;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, .05);
+        }
+
+        .kompetensi-kode {
+            display: inline-block;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .kompetensi-nama {
+            font-size: 13px;
+            font-weight: 500;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        .btn-back {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #475569;
+            border-radius: 10px;
+            padding: 9px 16px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .btn-back:hover {
+            background: #f1f5f9;
+        }
+
+        .detail-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .03);
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            width: 220px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .detail-value {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .badge-role {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-admin {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-mahasiswa {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        @media(max-width:768px) {
+
+            .detail-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+
+            .detail-label {
+                width: 100%;
+            }
+
+        }
+    </style>
+
+    <div class="container-fluid page-wrapper">
+
+        <div class="page-header">
+
+            <div>
+                <div class="page-title">
+                    Detail Cluster Skill
+                </div>
+
+                <div class="page-subtitle">
+                    Informasi lengkap data cluster skill
+                </div>
+            </div>
+
+            <a href="{{ route('cluster-skill.index') }}" class="btn-back">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Kembali
+            </a>
+
         </div>
 
-        <div class="detail-value">
-            {{ $clusterSkill->id_cluster_skill }}
+        <div class="detail-card">
+            <div class="detail-row">
+                <div class="detail-label">
+                    Area Fungsi
+                </div>
+
+                <div class="detail-value">
+                    <span class="badge-area"
+                        style="
+                    background:#dcfce7;
+                    color:#15803d;
+                    padding:7px 14px;
+                    border-radius:30px;
+                    font-size:12px;
+                    font-weight:600;
+                ">
+                        {{ $clusterSkill->areaFungsi->nama_area_fungsi ?? '-' }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">
+                    Nama Cluster Skill
+                </div>
+
+                <div class="detail-value">
+                    {{ $clusterSkill->nama_cluster }}
+                </div>
+            </div>
+
         </div>
-
-    </div>
-
-    <div class="detail-item">
-
-        <div class="detail-label">
-            Area Fungsi
-        </div>
-
-        <span class="badge-area">
-
-            {{ $clusterSkill->areaFungsi->nama_area_fungsi ?? '-' }}
-
-        </span>
-
-    </div>
-
-    <div class="detail-item">
-
-        <div class="detail-label">
-            Nama Cluster Skill
-        </div>
-
-        <div class="detail-value">
-
-            {{ $clusterSkill->nama_cluster }}
-
-        </div>
-
-    </div>
-
-    <hr>
-
-    <a href="{{ route('cluster-skill.index') }}"
-        class="btn btn-back">
-
-        <i class="fas fa-arrow-left me-2"></i>
-        Kembali
-
-    </a>
-
-</div>
-```
-
-</div>
-
-@endsection
+    @endsection

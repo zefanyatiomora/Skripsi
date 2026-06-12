@@ -125,6 +125,89 @@
             transform: translateY(-2px);
         }
 
+        /* ===== SUCCESS POPUP ===== */
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, .55);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 99999;
+        }
+
+        .popup-box {
+            background: white;
+            width: 90%;
+            max-width: 420px;
+
+            border-radius: 28px;
+
+            padding: 32px 28px;
+
+            text-align: center;
+
+            animation: popupShow .25s ease;
+        }
+
+        .popup-icon {
+            width: 80px;
+            height: 80px;
+
+            margin: auto auto 18px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 34px;
+        }
+
+        .popup-box h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .popup-box p {
+            color: #475569;
+            line-height: 1.8;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+
+        .popup-btn {
+            border: none;
+            background: #020817;
+            color: white;
+
+            padding: 13px 28px;
+
+            border-radius: 14px;
+
+            font-weight: 600;
+        }
+
+        @keyframes popupShow {
+            from {
+                transform: scale(.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
         @media(max-width:768px) {
 
             .page-header {
@@ -138,10 +221,114 @@
             }
 
         }
+
+        /* ===== SUCCESS POPUP ===== */
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, .55);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 99999;
+        }
+
+        .popup-box {
+            background: white;
+            width: 90%;
+            max-width: 420px;
+
+            border-radius: 28px;
+
+            padding: 32px 28px;
+
+            text-align: center;
+
+            animation: popupShow .25s ease;
+        }
+
+        .popup-icon {
+            width: 80px;
+            height: 80px;
+
+            margin: auto auto 18px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 34px;
+        }
+
+        .popup-box h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .popup-box p {
+            color: #475569;
+            line-height: 1.8;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+
+        .popup-btn {
+            border: none;
+            background: #020817;
+            color: white;
+
+            padding: 13px 28px;
+
+            border-radius: 14px;
+
+            font-weight: 600;
+        }
+
+        @keyframes popupShow {
+            from {
+                transform: scale(.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
     </style>
 
     <div class="container-fluid page-wrapper">
 
+        {{-- ALERT SUCCESS --}}
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show border-0 mb-4"
+                style="
+                border-radius:18px;
+                padding:16px 20px;
+                font-size:14px;
+            ">
+
+                <i class="fas fa-check-circle mr-2"></i>
+
+                {{ session('success') }}
+
+                <button type="button" class="close" data-dismiss="alert">
+
+                    <span>&times;</span>
+
+                </button>
+
+            </div>
+        @endif
         <!-- HEADER -->
         <div class="page-header">
 
@@ -336,5 +523,9 @@
         </div>
 
     </div>
-
+    <script>
+        function closeSuccessPopup() {
+            document.getElementById('successPopup').style.display = 'none';
+        }
+    </script>
 @endsection

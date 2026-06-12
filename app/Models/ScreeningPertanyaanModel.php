@@ -27,4 +27,13 @@ class ScreeningPertanyaanModel extends Model
             'id_pertanyaan'
         );
     }
+    public function clusters()
+{
+    return $this->belongsToMany(
+        ClusterSkillModel::class,
+        'screening_mapping',
+        'id_pertanyaan',
+        'id_cluster_skill'
+    );
+}
 }

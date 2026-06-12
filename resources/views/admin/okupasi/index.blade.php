@@ -12,8 +12,8 @@
         }
 
         /* =========================================
-                       HEADER
-                    ========================================= */
+                                       HEADER
+                                    ========================================= */
         .page-header {
             display: flex;
             justify-content: space-between;
@@ -34,8 +34,8 @@
         }
 
         /* =========================================
-                       BUTTON TAMBAH
-                    ========================================= */
+                                       BUTTON TAMBAH
+                                    ========================================= */
         .btn-add {
             background: #2563eb;
             color: white;
@@ -53,8 +53,8 @@
         }
 
         /* =========================================
-                       CARD
-                    ========================================= */
+                                       CARD
+                                    ========================================= */
         .table-card {
             background: white;
             border-radius: 24px;
@@ -64,8 +64,8 @@
         }
 
         /* =========================================
-                       TABLE
-                    ========================================= */
+                                       TABLE
+                                    ========================================= */
         .custom-table {
             width: 100%;
             border-collapse: collapse;
@@ -93,8 +93,8 @@
         }
 
         /* =========================================
-                       BADGE
-                    ========================================= */
+                                       BADGE
+                                    ========================================= */
         .badge-custom {
             padding: 8px 14px;
             border-radius: 50px;
@@ -114,8 +114,8 @@
         }
 
         /* =========================================
-                       BUTTON AKSI
-                    ========================================= */
+                                       BUTTON AKSI
+                                    ========================================= */
         .action-btn {
             width: 38px;
             height: 38px;
@@ -142,8 +142,8 @@
         }
 
         /* =========================================
-                       ALERT
-                    ========================================= */
+                                       ALERT
+                                    ========================================= */
         .alert-modern {
             border-radius: 18px;
             padding: 16px 20px;
@@ -151,15 +151,15 @@
         }
 
         /* =========================================
-                       MODAL
-                    ========================================= */
+                                       MODAL
+                                    ========================================= */
         .modal-content {
             border-radius: 24px;
         }
 
         /* =========================================
-                       RESPONSIVE
-                    ========================================= */
+                                       RESPONSIVE
+                                    ========================================= */
         @media(max-width:768px) {
 
             .page-header {
@@ -183,6 +183,10 @@
 
             .input-group .btn {
                 border-radius: 0 12px 12px 0;
+            }
+
+            .gap-2 {
+                gap: 10px;
             }
         }
     </style>
@@ -231,29 +235,66 @@
 
         <div class="table-card">
 
-            <!-- SEARCH -->
-            <div class="d-flex justify-content-end mb-4">
+            <div class="row mb-4">
 
-                <form action="{{ route('okupasi.index') }}" method="GET" class="w-100" style="max-width:400px;">
+                <!-- FILTER AREA FUNGSI -->
+                <div class="col-md-4 mb-2">
 
-                    <div class="input-group">
+                    <form action="{{ route('okupasi.index') }}" method="GET" class="d-flex gap-2">
 
-                        <span class="input-group-text bg-white border-end-0">
-                            <i class="fas fa-search text-muted"></i>
-                        </span>
+                        <select name="area_fungsi" class="form-control">
 
-                        <input type="text" name="search" class="form-control border-start-0"
-                            placeholder="Cari kode atau nama okupasi..." value="{{ request('search') }}">
+                            <option value="">
+                                Semua Area Fungsi
+                            </option>
+
+                            @foreach ($areaFungsi as $area)
+                                <option value="{{ $area->id_area_fungsi }}"
+                                    {{ request('area_fungsi') == $area->id_area_fungsi ? 'selected' : '' }}>
+
+                                    {{ $area->nama_area_fungsi }}
+
+                                </option>
+                            @endforeach
+
+                        </select>
+
+                        {{-- Pertahankan search saat filter --}}
+                        <input type="hidden" name="search" value="{{ request('search') }}">
 
                         <button type="submit" class="btn btn-primary">
 
-                            Cari
+                            <i class="fas fa-filter mr-1"></i>
 
                         </button>
 
-                    </div>
+                    </form>
 
-                </form>
+                </div>
+
+                <!-- SEARCH -->
+                <div class="col-md-6 mb-2">
+
+                    <form action="{{ route('okupasi.index') }}" method="GET">
+
+                        {{-- Pertahankan area fungsi saat search --}}
+                        <input type="hidden" name="area_fungsi" value="{{ request('area_fungsi') }}">
+
+                        <div class="input-group">
+
+                            <span class="input-group-text bg-white">
+                                <i class="fas fa-search text-muted"></i>
+                            </span>
+
+                            <input type="text" name="search" class="form-control"
+                                placeholder="Cari kode atau nama okupasi lalu tekan Enter..."
+                                value="{{ request('search') }}">
+
+                        </div>
+
+                    </form>
+
+                </div>
 
             </div>
 

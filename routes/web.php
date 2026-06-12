@@ -257,35 +257,24 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('cluster-skill')->group(function () {
 
-        Route::get(
-            '/',
-            [ClusterSkillController::class, 'index']
-        )->name('cluster-skill.index');
+        Route::get('/', [ClusterSkillController::class, 'index'])
+            ->name('cluster-skill.index');
 
-        Route::get(
-            '/create',
-            [ClusterSkillController::class, 'create']
-        )->name('cluster-skill.create');
+        Route::get('/create', [ClusterSkillController::class, 'create'])
+            ->name('cluster-skill.create');
 
-        Route::post(
-            '/store',
-            [ClusterSkillController::class, 'store']
-        )->name('cluster-skill.store');
+        Route::post('/store', [ClusterSkillController::class, 'store'])
+            ->name('cluster-skill.store');
 
-        Route::get(
-            '/edit/{id}',
-            [ClusterSkillController::class, 'edit']
-        )->name('cluster-skill.edit');
+        Route::get('/edit/{id}', [ClusterSkillController::class, 'edit'])
+            ->name('cluster-skill.edit');
 
-        Route::put(
-            '/update/{id}',
-            [ClusterSkillController::class, 'update']
-        )->name('cluster-skill.update');
+        Route::put('/update/{id}', [ClusterSkillController::class, 'update'])
+            ->name('cluster-skill.update');
 
-        Route::delete(
-            '/delete/{id}',
-            [ClusterSkillController::class, 'destroy']
-        )->name('cluster-skill.destroy');
+        Route::delete('/delete/{id}', [ClusterSkillController::class, 'destroy'])
+            ->name('cluster-skill.destroy');
+
         Route::resource('cluster-skill', ClusterSkillController::class);
     });
     /*

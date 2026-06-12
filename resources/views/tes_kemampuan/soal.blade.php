@@ -7,77 +7,77 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        /* ===== CONTAINER ===== */
         .container {
-            max-width: 900px;
+            max-width: 760px;
         }
 
         /* ===== PROGRESS ===== */
         .top-progress-wrapper {
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
 
         .progress-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
+            margin-bottom: 8px;
         }
 
         .progress-step {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: .8px;
             color: #64748b;
             text-transform: uppercase;
         }
 
         .custom-progress {
-            height: 8px;
+            height: 6px;
             border-radius: 999px;
             background: #e2e8f0;
             overflow: hidden;
         }
 
         .custom-bar {
-            background: linear-gradient(90deg, #020817, #0f172a, #1e293b);
+            background: linear-gradient(90deg, #020817, #0f172a);
             border-radius: 999px;
         }
 
         /* ===== TITLE ===== */
         .title-main {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 700;
             color: #0f172a;
-            margin-top: 15px;
+            margin-top: 8px;
         }
 
         .subtitle {
-            font-size: 14px;
+            font-size: 12px;
             color: #64748b;
-            margin-top: 8px;
+            margin-top: 4px;
+            margin-bottom: 18px;
         }
 
         /* ===== QUESTION CARD ===== */
         .question-card {
             background: #fff;
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            margin-bottom: 14px;
             border: 1px solid #e5e7eb;
-            transition: .25s;
+            transition: .2s;
         }
 
         .question-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         /* ===== NUMBER ===== */
         .number {
-            width: 38px;
-            height: 38px;
+            width: 30px;
+            height: 30px;
             background: #eef4ff;
             color: #0d6efd;
             border-radius: 50%;
@@ -85,29 +85,32 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            margin-right: 14px;
+            font-size: 13px;
+            margin-right: 10px;
             flex-shrink: 0;
         }
 
-        /* ===== TEXT ===== */
+        /* ===== QUESTION ===== */
         .question-text {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             color: #1e293b;
             display: flex;
             align-items: flex-start;
-            line-height: 1.8;
+            line-height: 1.6;
         }
 
         /* ===== OPTIONS ===== */
         .option-wrapper {
             display: flex;
+            justify-content: center;
             gap: 14px;
-            margin-top: 22px;
+            margin-top: 16px;
         }
 
         .option-item {
-            flex: 1;
+            width: 140px;
+            flex: none;
         }
 
         .option-item input[type="radio"] {
@@ -116,35 +119,32 @@
 
         .option-label {
             border: 2px solid #e9ecef;
-            border-radius: 18px;
-            padding: 15px;
+            border-radius: 12px;
+            padding: 10px 14px;
             text-align: center;
             cursor: pointer;
-            font-size: 14px;
-            transition: 0.25s;
+            font-size: 13px;
+            transition: .2s;
             position: relative;
             background: white;
             font-weight: 500;
         }
 
-        /* HOVER */
         .option-label:hover {
             border-color: #0d6efd;
         }
 
-        /* ACTIVE */
         .option-item input[type="radio"]:checked+.option-label {
             border-color: #0d6efd;
             background: #eef4ff;
             font-weight: 600;
         }
 
-        /* CHECK ICON */
         .option-label::after {
             position: absolute;
-            right: 12px;
-            top: 10px;
-            font-size: 13px;
+            right: 10px;
+            top: 8px;
+            font-size: 11px;
             display: none;
         }
 
@@ -162,19 +162,19 @@
 
         /* ===== BUTTON ===== */
         .btn-submit {
-            border-radius: 18px;
-            padding: 16px;
-            font-size: 15px;
-            font-weight: 700;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 600;
             background: #020817;
             border: none;
-            transition: .25s;
-            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15);
+            transition: .2s;
+            box-shadow: none;
         }
 
         .btn-submit:hover {
             background: #111827;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         /* ===== POPUP ===== */
@@ -185,84 +185,72 @@
             width: 100%;
             height: 100%;
             background: rgba(15, 23, 42, 0.55);
-
             display: none;
-
             align-items: center;
             justify-content: center;
-
             z-index: 9999;
         }
 
         .popup-box {
             background: white;
             width: 90%;
-            max-width: 420px;
-
-            border-radius: 28px;
-
-            padding: 32px 28px;
-
+            max-width: 360px;
+            border-radius: 18px;
+            padding: 24px;
             text-align: center;
-
             animation: popupShow .25s ease;
         }
 
         .popup-icon {
-            width: 80px;
-            height: 80px;
-
-            margin: auto auto 18px;
-
+            width: 60px;
+            height: 60px;
+            margin: auto auto 14px;
             border-radius: 50%;
-
             background: #fee2e2;
-
             color: #dc2626;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
-            font-size: 34px;
+            font-size: 26px;
         }
 
         .popup-box h3 {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: #0f172a;
         }
 
         .popup-box p {
             color: #475569;
-            line-height: 1.8;
-            font-size: 15px;
-            margin-bottom: 24px;
+            line-height: 1.6;
+            font-size: 13px;
+            margin-bottom: 18px;
         }
 
         .popup-btn {
             border: none;
             background: #020817;
             color: white;
-
-            padding: 13px 28px;
-
-            border-radius: 14px;
-
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-size: 13px;
             font-weight: 600;
-
-            transition: .25s;
         }
 
         .popup-btn:hover {
             background: #111827;
         }
 
-        @keyframes popupShow {
+        .spinner-box {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
 
+        @keyframes popupShow {
             from {
-                transform: scale(.85);
+                transform: scale(.9);
                 opacity: 0;
             }
 
@@ -270,22 +258,44 @@
                 transform: scale(1);
                 opacity: 1;
             }
-
         }
 
         /* ===== MOBILE ===== */
         @media (max-width: 576px) {
 
-            .option-wrapper {
-                flex-direction: column;
-            }
-
-            .question-card {
-                padding: 20px;
+            .container {
+                max-width: 100%;
             }
 
             .title-main {
-                font-size: 24px;
+                font-size: 20px;
+            }
+
+            .question-card {
+                padding: 15px;
+            }
+
+            .option-wrapper {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .option-item {
+                width: 100%;
+            }
+
+            .option-label {
+                padding: 12px;
+            }
+
+            .number {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            .question-text {
+                font-size: 13px;
             }
         }
     </style>
@@ -321,8 +331,9 @@
 
             @csrf
 
-            <input type="hidden" name="id_cluster" value="{{ $cluster->id_cluster_skill }}">
-
+            @foreach ($clusters as $cluster)
+                <input type="hidden" name="id_cluster[]" value="{{ $cluster->id_cluster_skill }}">
+            @endforeach
             @foreach ($kompetensi as $i => $k)
                 <div class="question-card" id="question-{{ $i + 1 }}">
 
@@ -333,7 +344,7 @@
                         </div>
 
                         <div>
-                            {{ $k->kompetensi }}
+                            {{ $k->pertanyaan_kompetensi }}
                         </div>
 
                     </div>
@@ -349,7 +360,7 @@
                                 <input type="radio" name="jawaban[{{ $k->id_kompetensi }}]" value="1">
 
                                 <div class="option-label">
-                                    Ya, Saya Mampu
+                                    Benar
                                 </div>
 
                             </label>
@@ -364,7 +375,7 @@
                                 <input type="radio" name="jawaban[{{ $k->id_kompetensi }}]" value="0">
 
                                 <div class="option-label">
-                                    Belum Mampu
+                                    Tidak Benar
                                 </div>
 
                             </label>
@@ -390,7 +401,26 @@
         </form>
 
     </div>
+    <!-- LOADING POPUP -->
+    <div id="successPopup" class="popup-overlay">
 
+        <div class="popup-box">
+
+            <div class="spinner-box">
+                <div class="spinner-border text-dark" role="status" style="width:70px;height:70px;">
+                </div>
+            </div>
+
+            <h3>Sedang Memproses</h3>
+
+            <p>
+                Jawaban Anda sedang dianalisis oleh sistem.
+                Mohon tunggu sebentar...
+            </p>
+
+        </div>
+
+    </div>
     <!-- POPUP -->
     <div id="customPopup" class="popup-overlay">
 
@@ -469,14 +499,28 @@
 
                     firstUnanswered = unanswered[0];
 
-                    document.getElementById(
-                        'popupMessage'
-                    ).innerHTML = message;
+                    document.getElementById('popupMessage').innerHTML = message;
+                    document.getElementById('customPopup').style.display = 'flex';
 
-                    document.getElementById(
-                        'customPopup'
-                    ).style.display = 'flex';
+                    return;
                 }
+
+                /* ==========================
+                   SEMUA SOAL SUDAH TERJAWAB
+                   ========================== */
+
+                e.preventDefault();
+
+                /* tampilkan popup loading */
+                document.getElementById('successPopup').style.display = 'flex';
+
+                /* submit setelah 2 detik */
+                setTimeout(function() {
+
+                    form.submit();
+
+                }, 2000);
+
 
             });
 
@@ -503,7 +547,6 @@
                 });
 
             }
-
         }
     </script>
 @endsection

@@ -33,4 +33,12 @@ class ClusterSkillModel extends Model
             'id_cluster_skill'
         );
     }
+    public function screeningMapping()
+{
+    return $this->hasMany(
+        ScreeningMappingModel::class,
+        'id_cluster_skill',
+        'id_cluster_skill'
+    );
+}
 }

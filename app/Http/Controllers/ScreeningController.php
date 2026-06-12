@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\ClusterSkillModel;
 use App\Models\DomainModel;
 use App\Models\HasilTesModel;
+use App\Models\ScreeningPertanyaanModel;
 use Illuminate\Support\Facades\Auth;
-
 
 class ScreeningController extends Controller
 {
@@ -37,25 +37,54 @@ class ScreeningController extends Controller
     }
     public function soal(Request $request)
     {
-        $clusterIds = $request->cluster_skill;
+        $clusterIds = $request->input('cluster_skill', []);
 
-        if (!$clusterIds) {
-            return back()->with('error', 'Pilih minimal 1 cluster');
+        if (empty($clusterIds)) {
+            return redirect()
+                ->route('screening.index')
+                ->with('error', 'Silakan pilih cluster terlebih dahulu');
         }
 
-        $questions = DB::table('screening_pertanyaan')
-            ->join(
-                'screening_mapping',
-                'screening_pertanyaan.id_pertanyaan',
-                '=',
-                'screening_mapping.id_pertanyaan'
-            )
-            ->whereIn('screening_mapping.id_cluster_skill', $clusterIds)
-            ->select('screening_pertanyaan.*')
+        // pastikan array
+        if (!is_array($clusterIds)) {
+            $clusterIds = [$clusterIds];
+        }
+
+        // 🔥 TAMBAHAN LOGIC: jika hanya 1 cluster langsung ke hasil
+        if (count($clusterIds) == 1) {
+
+            $clusters = ClusterSkillModel::whereIn(
+                'id_cluster_skill',
+                $clusterIds
+            )->get();
+
+            // optional simpan session juga kalau dipakai nanti
+            session([
+                'top_cluster_ids' => $clusterIds
+            ]);
+
+            return view('tes_kemampuan.hasil_screening', compact('clusters'));
+        }
+
+        // kalau lebih dari 1 lanjut proses soal
+        $clusters = ClusterSkillModel::whereIn(
+            'id_cluster_skill',
+            $clusterIds
+        )->get();
+
+        $pertanyaan = ScreeningPertanyaanModel::whereHas(
+            'mapping',
+            function ($q) use ($clusterIds) {
+                $q->whereIn('id_cluster_skill', $clusterIds);
+            }
+        )
             ->distinct()
             ->get();
 
-        return view('tes_kemampuan.soal_screening', compact('questions', 'clusterIds'));
+        return view(
+            'tes_kemampuan.soal_screening',
+            compact('clusters', 'pertanyaan')
+        );
     }
     public function submit(Request $request)
     {
@@ -63,51 +92,54 @@ class ScreeningController extends Controller
 
         $clusterScore = [];
 
-        // 1. Hitung hanya jawaban YA (1)
         foreach ($jawaban as $idPertanyaan => $nilai) {
 
-            if ((int)$nilai !== 1) continue;
+            if ((int)$nilai !== 1) {
+                continue;
+            }
 
-            $clusters = DB::table('screening_mapping')
+            $clusterIds = DB::table('screening_mapping')
                 ->where('id_pertanyaan', $idPertanyaan)
                 ->pluck('id_cluster_skill');
 
-            foreach ($clusters as $clusterId) {
-                $clusterScore[$clusterId] = ($clusterScore[$clusterId] ?? 0) + 1;
+            foreach ($clusterIds as $clusterId) {
+
+                $clusterScore[$clusterId] =
+                    ($clusterScore[$clusterId] ?? 0) + 1;
             }
         }
 
         if (empty($clusterScore)) {
-            return view('tes_kemampuan.hasil_screening', [
-                'clusters' => collect(),
-                'clusterUtama' => null
-            ]);
+
+            return back()->with(
+                'error',
+                'Tidak ada jawaban valid'
+            );
         }
 
-        // 2. cari nilai tertinggi
         $maxScore = max($clusterScore);
 
-        // 3. AMBIL HANYA CLUSTER TERBESAR (kalau seri, tetap bisa lebih dari 1)
-        $topClusterIds = array_keys(
-            array_filter($clusterScore, fn($score) => $score === $maxScore)
+        $topClusterIds = collect($clusterScore)
+            ->filter(function ($score) use ($maxScore) {
+                return $score == $maxScore;
+            })
+            ->keys()
+            ->toArray();
+
+        $clusters = ClusterSkillModel::whereIn(
+            'id_cluster_skill',
+            $topClusterIds
+        )->get();
+
+        session([
+            'top_cluster_ids' => $topClusterIds
+        ]);
+
+        return view(
+            'tes_kemampuan.hasil_screening',
+            compact(
+                'clusters'
+            )
         );
-
-        // 4. AMBIL DATA CLUSTER
-        $clusters = ClusterSkillModel::whereIn('id_cluster_skill', $topClusterIds)
-            ->get();
-
-        // 5. SIMPAN HASIL (cluster utama saja)
-        $userId = Auth::user()->id_pengguna ?? Auth::id();
-
-        HasilTesModel::create([
-            'id_pengguna' => $userId,
-            'id_cluster_skill' => $topClusterIds[0],
-            'tanggal_tes' => now()
-        ]);
-
-        return view('tes_kemampuan.hasil_screening', [
-            'clusters' => $clusters,
-            'clusterUtama' => $clusters->first()
-        ]);
     }
-}
+}   

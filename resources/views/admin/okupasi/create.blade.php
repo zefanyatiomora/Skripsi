@@ -155,7 +155,7 @@
             font-weight: 500;
         }
 
-        @keyframes popupShow {
+        }) @keyframes popupShow {
 
             from {
                 transform: scale(.85);
@@ -170,207 +170,183 @@
         }
     </style>
 
-    <div class="container-fluid py-4">
-        @if ($errors->has('nama_okupasi'))
-            <div class="popup-overlay" id="errorPopup">
+    <!-- HEADER -->
+    <div class="mb-4">
 
-                <div class="popup-box">
+        <div class="page-title">
+            Tambah Okupasi
+        </div>
 
-                    <div class="popup-icon">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </div>
+        <div class="page-subtitle">
+            Tambahkan data okupasi baru
+        </div>
 
-                    <h3>Format Tidak Valid</h3>
+    </div>
 
-                    <p>
-                        {{ $errors->first('nama_okupasi') }}
-                    </p>
+    <!-- FORM -->
+    <div class="form-card">
 
-                    <button type="button" class="popup-btn" onclick="closePopup()">
+        <form id="formOkupasi" action="{{ route('okupasi.store') }}" method="POST" novalidate>
+            @csrf
 
-                        Oke
+            <div class="row">
 
-                    </button>
+                <!-- KODE -->
+                <div class="col-md-6 mb-4">
+
+                    <label class="form-label">
+                        Kode Okupasi
+                    </label>
+
+                    <input type="text" name="kode_okupasi" class="form-control">
 
                 </div>
 
-            </div>
-        @endif
+                <!-- NAMA -->
+                <div class="col-md-6 mb-4">
 
-        <!-- HEADER -->
-        <div class="mb-4">
+                    <label class="form-label">
+                        Nama Okupasi
+                    </label>
 
-            <div class="page-title">
-                Tambah Okupasi
-            </div>
+                    <input type="text" name="nama_okupasi" class="form-control">
 
-            <div class="page-subtitle">
-                Tambahkan data okupasi baru
-            </div>
+                </div>
 
-        </div>
+                <!-- CLUSTER SKILL -->
+                <div class="col-md-6 mb-4">
 
-        <!-- FORM -->
-        <div class="form-card">
+                    <label class="form-label">
+                        Cluster Skill
+                    </label>
 
-            <form action="{{ route('okupasi.store') }}" method="POST">
+                    <select name="id_cluster_skill" class="form-select">
 
-                @csrf
+                        <option value="">
+                            -- Pilih Cluster Skill --
+                        </option>
 
-                <div class="row">
-
-                    <!-- KODE -->
-                    <div class="col-md-6 mb-4">
-
-                        <label class="form-label">
-                            Kode Okupasi
-                        </label>
-
-                        <input type="text" name="kode_okupasi" class="form-control" required>
-
-                    </div>
-
-                    <!-- NAMA -->
-                    <div class="col-md-6 mb-4">
-
-                        <label class="form-label">
-                            Nama Okupasi
-                        </label>
-
-                        <input type="text" name="nama_okupasi" class="form-control" required>
-
-                    </div>
-
-                    <!-- CLUSTER SKILL -->
-                    <div class="col-md-6 mb-4">
-
-                        <label class="form-label">
-                            Cluster Skill
-                        </label>
-
-                        <select name="id_cluster_skill" id="clusterSkill" class="form-select" required>
-
-                            <option value="">
-                                -- Pilih Cluster --
+                        @foreach ($clusterSkill as $cluster)
+                            <option value="{{ $cluster->id_cluster_skill }}">
+                                {{ $cluster->nama_cluster }}
                             </option>
+                        @endforeach
 
-                            @foreach ($clusterSkill as $cluster)
-                                <option value="{{ $cluster->id_cluster_skill }}"
-                                    data-area="{{ $cluster->areaFungsi->nama_area_fungsi }}">
+                    </select>
 
-                                    {{ $cluster->nama_cluster }}
+                </div>
 
-                                </option>
-                            @endforeach
+                <!-- AREA FUNGSI -->
+                <div class="col-md-6 mb-4">
 
-                        </select>
+                    <label class="form-label">
+                        Area Fungsi
+                    </label>
 
-                    </div>
+                    <select name="id_area_fungsi" class="form-select">
 
-                    <!-- AREA FUNGSI -->
-                    <div class="col-md-6 mb-4">
+                        <option value="">
+                            -- Pilih Area Fungsi --
+                        </option>
 
-                        <label class="form-label">
-                            Area Fungsi
-                        </label>
+                        @foreach ($areaFungsi as $area)
+                            <option value="{{ $area->id_area_fungsi }}">
+                                {{ $area->kode_area_fungsi }}
+                                -
+                                {{ $area->nama_area_fungsi }}
+                            </option>
+                        @endforeach
 
-                        <input type="text" id="areaFungsi" class="form-control" readonly>
+                    </select>
 
-                    </div>
+                </div> <!-- DESKRIPSI -->
+                <div class="col-12 mb-4">
 
-                    <!-- DESKRIPSI -->
+                    <label class="form-label">
+                        Deskripsi
+                    </label>
+
+                    <textarea name="deskripsi" rows="5" class="form-control"></textarea>
+
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <!-- KOMPETENSI -->
                     <div class="col-12 mb-4">
 
-                        <label class="form-label">
-                            Deskripsi
-                        </label>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
 
-                        <textarea name="deskripsi" rows="5" class="form-control"></textarea>
+                            <label class="form-label mb-0">
+                                Kompetensi
+                            </label>
 
-                    </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#kompetensiModal">
 
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                <i class="fas fa-plus me-1"></i>
+                                Tambah Kompetensi Baru
 
-                        <!-- KOMPETENSI -->
-                        <div class="col-12 mb-4">
+                            </button>
 
-                            <div class="d-flex justify-content-between align-items-center mb-3">
+                        </div>
 
-                                <label class="form-label mb-0">
-                                    Kompetensi
-                                </label>
+                        <div class="mb-3">
 
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#kompetensiModal">
+                            <input type="text" id="searchKompetensi" class="form-control"
+                                placeholder="Cari kode atau nama kompetensi...">
 
-                                    <i class="fas fa-plus me-1"></i>
-                                    Tambah Kompetensi Baru
+                        </div>
 
-                                </button>
+                        <div class="kompetensi-box" id="kompetensiContainer">
 
-                            </div>
+                            @foreach ($kompetensi as $item)
+                                <div class="form-check kompetensi-item kompetensi-row"
+                                    data-search="{{ strtolower($item->kode_kompetensi . ' ' . $item->kompetensi) }}">
 
-                            <div class="mb-3">
+                                    <input type="checkbox" name="kompetensi[]" value="{{ $item->id_kompetensi }}"
+                                        class="form-check-input" id="k{{ $item->id_kompetensi }}">
 
-                                <input type="text" id="searchKompetensi" class="form-control"
-                                    placeholder="Cari kode atau nama kompetensi...">
+                                    <label class="form-check-label" for="k{{ $item->id_kompetensi }}">
 
-                            </div>
+                                        <strong>{{ $item->kode_kompetensi }}</strong>
+                                        -
+                                        {{ $item->kompetensi }}
 
-                            <div class="kompetensi-box" id="kompetensiContainer">
+                                    </label>
 
-                                @foreach ($kompetensi as $item)
-                                    <div class="form-check kompetensi-item kompetensi-row"
-                                        data-search="{{ strtolower($item->kode_kompetensi . ' ' . $item->kompetensi) }}">
-
-                                        <input type="checkbox" name="kompetensi[]" value="{{ $item->id_kompetensi }}"
-                                            class="form-check-input" id="k{{ $item->id_kompetensi }}">
-
-                                        <label class="form-check-label" for="k{{ $item->id_kompetensi }}">
-
-                                            <strong>
-                                                {{ $item->kode_kompetensi }}
-                                            </strong>
-
-                                            -
-
-                                            {{ $item->kompetensi }}
-
-                                        </label>
-
-                                    </div>
-                                @endforeach
-
-                            </div>
-
+                                </div>
+                            @endforeach
                         </div>
 
                     </div>
 
                 </div>
 
-        </div>
+            </div>
 
-        <!-- BUTTON -->
-        <div class="d-flex justify-content-end gap-2">
+    </div>
 
-            <a href="{{ route('okupasi.index') }}" class="btn btn-light border btn-back">
+    <!-- BUTTON -->
+    <div class="d-flex justify-content-end gap-2">
 
-                Batal
+        <a href="{{ route('okupasi.index') }}" class="btn btn-light border btn-back">
 
-            </a>
+            Batal
 
-            <button type="submit" class="btn btn-save">
+        </a>
 
-                <i class="fas fa-save mr-1"></i>
+        <button type="submit" class="btn btn-save">
 
-                Simpan
+            <i class="fas fa-save mr-1"></i>
 
-            </button>
+            Simpan
 
-        </div>
+        </button>
 
-        </form>
+    </div>
+
+    </form>
 
     </div>
 
@@ -380,7 +356,8 @@
         function simpanKompetensi() {
             let kode = document.getElementById('kodeKompetensi').value;
             let nama = document.getElementById('namaKompetensi').value;
-
+            let pernyataan =
+                document.getElementById('pertanyaanKompetensi').value;
             fetch("{{ route('kompetensi.ajax.store') }}", {
 
                     method: "POST",
@@ -390,10 +367,10 @@
                         "Accept": "application/json",
                         "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
-
                     body: JSON.stringify({
                         kode_kompetensi: kode,
-                        kompetensi: nama
+                        kompetensi: nama,
+                        pertanyaan_kompetensi: pernyataan
                     })
 
                 })
@@ -411,11 +388,11 @@
 
                 .then(result => {
 
-                        let item = result.data;
+                    let item = result.data;
 
-                        let html = `
+                    let html = `
 <div class="form-check kompetensi-item kompetensi-row"
-     data-search="${item.kode_kompetensi.toLowerCase()} ${item.kompetensi.toLowerCase()}">
+data-search="${item.kode_kompetensi.toLowerCase()} ${item.kompetensi.toLowerCase()}">
 
     <input
         type="checkbox"
@@ -426,7 +403,7 @@
         id="new${item.id_kompetensi}">
 
     <label class="form-check-label"
-           for="new${item.id_kompetensi}">
+        for="new${item.id_kompetensi}">
 
         <strong>${item.kode_kompetensi}</strong>
         -
@@ -437,54 +414,41 @@
 </div>
 `;
 
-                            document
-                                .getElementById('kompetensiContainer')
-                                .insertAdjacentHTML('beforeend', html);
+                    document
+                        .getElementById('kompetensiContainer')
+                        .insertAdjacentHTML('beforeend', html);
 
-                            document.getElementById('kodeKompetensi').value = '';
-                            document.getElementById('namaKompetensi').value = '';
+                    document.getElementById('kodeKompetensi').value = '';
+                    document.getElementById('namaKompetensi').value = '';
 
-                            bootstrap.Modal
-                                .getInstance(
-                                    document.getElementById('kompetensiModal')
-                                )
-                                .hide();
+                    bootstrap.Modal
+                        .getInstance(
+                            document.getElementById('kompetensiModal')
+                        )
+                        .hide();
 
-                        })
+                })
 
-                        .catch(error => {
+                .catch(error => {
 
-                            if (error.errors) {
+                    if (error.errors) {
 
-                                let pesan = Object.values(error.errors)
-                                    .flat()
-                                    .join('\n');
+                        let pesan = Object.values(error.errors)
+                            .flat()
+                            .join('\n');
 
-                                alert(pesan);
+                        alert(pesan);
 
-                            } else {
+                    } else {
 
-                                alert('Terjadi kesalahan saat menyimpan kompetensi.');
+                        alert('Terjadi kesalahan saat menyimpan kompetensi.');
 
-                            }
+                    }
 
-                            console.log(error);
+                    console.log(error);
 
-                        });
-                }
-    </script>
-    <script>
-        document
-            .getElementById('clusterSkill')
-            .addEventListener('change', function() {
-
-                let selected =
-                    this.options[this.selectedIndex];
-
-                document.getElementById('areaFungsi').value =
-                    selected.dataset.area || '';
-
-            });
+                });
+        }
     </script>
     <script>
         document
@@ -516,33 +480,83 @@
 
             });
     </script>
+    <script>
+        function closePopup() {
+
+            document.getElementById('errorPopup')
+                .style.display = 'none';
+
+        }
+    </script>
+    <script>
+        document.getElementById('formOkupasi')
+            .addEventListener('submit', function(e) {
+
+                let kode = document.querySelector('[name="kode_okupasi"]').value.trim();
+
+                let nama = document.querySelector('[name="nama_okupasi"]').value.trim();
+
+                let cluster = document.querySelector('[name="id_cluster_skill"]').value;
+
+                let kompetensi =
+                    document.querySelectorAll(
+                        'input[name="kompetensi[]"]:checked'
+                    );
+
+                if (
+                    kode === '' ||
+                    nama === '' ||
+                    cluster === '' ||
+                    kompetensi.length === 0
+                ) {
+
+                    e.preventDefault();
+
+                    document.getElementById('errorPopup')
+                        .style.display = 'flex';
+                }
+
+            });
+    </script>
     <div class="modal fade" id="kompetensiModal" tabindex="-1">
 
         <div class="modal-dialog modal-dialog-centered">
 
             <div class="modal-content">
 
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Tambah Kompetensi Baru
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                </div>
 
                 <div class="modal-body">
 
                     <div class="mb-3">
-
                         <label class="form-label">
                             Kode Kompetensi
                         </label>
 
                         <input type="text" id="kodeKompetensi" class="form-control">
-
                     </div>
 
                     <div class="mb-3">
-
                         <label class="form-label">
                             Nama Kompetensi
                         </label>
 
                         <input type="text" id="namaKompetensi" class="form-control">
+                    </div>
 
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Pernyataan Kompetensi
+                        </label>
+
+                        <textarea id="pertanyaanKompetensi" class="form-control" rows="4"></textarea>
                     </div>
 
                 </div>
@@ -550,9 +564,7 @@
                 <div class="modal-footer">
 
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-
                         Batal
-
                     </button>
 
                     <button type="button" class="btn btn-primary" onclick="simpanKompetensi()">
@@ -566,5 +578,27 @@
         </div>
 
     </div>
+    <div class="popup-overlay" id="errorPopup" style="display:none;">
 
+        <div class="popup-box">
+
+            <div class="popup-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+
+            <h3>Data Belum Lengkap</h3>
+
+            <p>
+                Mohon lengkapi seluruh data yang diperlukan sebelum menyimpan data okupasi.
+            </p>
+
+            <button type="button" class="popup-btn" onclick="closePopup()">
+
+                Oke
+
+            </button>
+
+        </div>
+
+    </div>
 @endsection

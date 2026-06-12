@@ -255,29 +255,27 @@
         </div>
         <div class="table-card">
 
-            <!-- SEARCH -->
-            <div class="d-flex justify-content-end mb-4">
+            <div class="row mb-4">
 
-                <form action="{{ route('cluster-skill.index') }}" method="GET" class="w-100" style="max-width:400px;">
+                <div class="col-md-6">
 
-                    <div class="input-group">
+                    <form action="{{ route('cluster-skill.index') }}" method="GET">
 
-                        <span class="input-group-text bg-white border-end-0">
-                            <i class="fas fa-search text-muted"></i>
-                        </span>
+                        <div class="input-group">
 
-                        <input type="text" name="search" class="form-control border-start-0"
-                            placeholder="Cari cluster atau area fungsi..." value="{{ request('search') }}">
+                            <span class="input-group-text bg-white">
+                                <i class="fas fa-search text-muted"></i>
+                            </span>
 
-                        <button type="submit" class="btn btn-primary">
+                            <input type="text" name="search" class="form-control"
+                                placeholder="Cari dan klik enter" value="{{ request('search') }}">
 
-                            Cari
+                        </div>
 
-                        </button>
+                    </form>
 
-                    </div>
+                </div>
 
-                </form>
             </div>
             <!-- TABLE -->
             <div class="table-card">

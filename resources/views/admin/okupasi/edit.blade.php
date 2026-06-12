@@ -96,259 +96,241 @@
 
         }
     </style>
-    <div class="container-fluid py-4">
-        @if ($errors->has('nama_okupasi'))
-            <div class="popup-overlay" id="errorPopup">
 
-                <div class="popup-box">
+    {{-- HEADER --}}
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-                    <div class="popup-icon">
-                        <i class="fas fa-exclamation-circle"></i>
+        <div>
+            <h3 class="fw-bold mb-1">Edit Okupasi</h3>
+            <p class="text-muted mb-0">
+                Ubah data okupasi dan kompetensi
+            </p>
+        </div>
+
+        <a href="{{ route('okupasi.index') }}" class="btn btn-light border">
+            <i class="fas fa-arrow-left me-1"></i>
+            Kembali
+        </a>
+
+    </div>
+
+    {{-- CARD --}}
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-body p-4">
+
+            <form action="{{ route('okupasi.update', $okupasi->id_okupasi) }}" method="POST">
+
+                @csrf
+                @method('PUT')
+
+                <div class="row g-4">
+
+                    {{-- KODE OKUPASI --}}
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Kode Okupasi
+                        </label>
+
+                        <input type="text" name="kode_okupasi"
+                            class="form-control @error('kode_okupasi') is-invalid @enderror"
+                            value="{{ old('kode_okupasi', $okupasi->kode_okupasi) }}">
+
+                        @error('kode_okupasi')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
                     </div>
 
-                    <h3>Format Tidak Valid</h3>
+                    {{-- NAMA OKUPASI --}}
+                    <div class="col-md-6">
 
-                    <p>
-                        {{ $errors->first('nama_okupasi') }}
-                    </p>
+                        <label class="form-label fw-semibold">
+                            Nama Okupasi
+                        </label>
 
-                    <button type="button" class="popup-btn" onclick="closePopup()">
+                        <input type="text" name="nama_okupasi"
+                            class="form-control @error('nama_okupasi') is-invalid @enderror"
+                            value="{{ old('nama_okupasi', $okupasi->nama_okupasi) }}">
 
-                        Oke
+                        @error('nama_okupasi')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+                    {{-- CLUSTER SKILL --}}
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Cluster Skill
+                        </label>
+
+                        <select name="id_cluster_skill" class="form-select">
+
+                            <option value="">
+                                -- Pilih Cluster Skill --
+                            </option>
+
+                            @foreach ($clusterSkill as $cluster)
+                                <option value="{{ $cluster->id_cluster_skill }}"
+                                    {{ old('id_cluster_skill', $okupasi->id_cluster_skill) == $cluster->id_cluster_skill ? 'selected' : '' }}>
+
+                                    {{ $cluster->nama_cluster }}
+
+                                </option>
+                            @endforeach
+
+                        </select>
+
+                        @error('id_cluster_skill')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+                    {{-- AREA FUNGSI --}}
+                    <div class="col-md-6 mb-4">
+
+                        <label class="form-label">
+                            Area Fungsi
+                        </label>
+
+                        <select name="id_area_fungsi" class="form-select">
+
+                            <option value="">
+                                -- Pilih Area Fungsi --
+                            </option>
+
+                            @foreach ($areaFungsi as $area)
+                                <option value="{{ $area->id_area_fungsi }}"
+                                    {{ old('id_area_fungsi', $okupasi->id_area_fungsi) == $area->id_area_fungsi ? 'selected' : '' }}>
+
+                                    {{ $area->kode_area_fungsi }}
+                                    -
+                                    {{ $area->nama_area_fungsi }}
+
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    {{-- KOMPETENSI --}}
+                    <div class="col-12">
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+
+                            <label class="form-label fw-semibold mb-0">
+                                Kompetensi Terkait
+                            </label>
+
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#kompetensiModal">
+
+                                <i class="fas fa-plus me-1"></i>
+                                Tambah Kompetensi Baru
+
+                            </button>
+
+                        </div>
+
+                        {{-- SEARCH --}}
+                        <div class="mb-3">
+
+                            <input type="text" id="searchKompetensi" class="form-control"
+                                placeholder="Cari kode atau nama kompetensi...">
+
+                        </div>
+
+                        <div id="kompetensiContainer" class="border rounded-4 p-3 bg-light"
+                            style="max-height:350px; overflow-y:auto;">
+                            @foreach ($kompetensi as $item)
+                                <div class="form-check mb-2 kompetensi-row"
+                                    data-search="{{ strtolower($item->kode_kompetensi . ' ' . $item->kompetensi) }}">
+
+                                    <input class="form-check-input" type="checkbox" name="kompetensi[]"
+                                        value="{{ $item->id_kompetensi }}" id="k{{ $item->id_kompetensi }}"
+                                        {{ in_array($item->id_kompetensi, $okupasi->kompetensi->pluck('id_kompetensi')->toArray()) ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="k{{ $item->id_kompetensi }}">
+
+                                        <strong>
+                                            {{ $item->kode_kompetensi }}
+                                        </strong>
+
+                                        -
+
+                                        {{ $item->kompetensi }}
+
+                                    </label>
+
+                                </div>
+                            @endforeach
+
+                        </div>
+
+                    </div>
+
+                    {{-- DESKRIPSI --}}
+                    <div class="col-12">
+
+                        <label class="form-label fw-semibold">
+                            Deskripsi
+                        </label>
+
+                        <textarea name="deskripsi" rows="5" class="form-control @error('deskripsi') is-invalid @enderror">{{ old('deskripsi', $okupasi->deskripsi) }}</textarea>
+
+                        @error('deskripsi')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+                {{-- BUTTON --}}
+                <div class="d-flex justify-content-end gap-2 mt-4">
+
+                    <a href="{{ route('okupasi.index') }}" class="btn btn-light border">
+
+                        Batal
+
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+
+                        <i class="fas fa-save me-1"></i>
+                        Simpan Perubahan
 
                     </button>
 
                 </div>
 
-            </div>
-        @endif
-
-        {{-- HEADER --}}
-        <div class="d-flex justify-content-between align-items-center mb-4">
-
-            <div>
-                <h3 class="fw-bold mb-1">Edit Okupasi</h3>
-                <p class="text-muted mb-0">
-                    Ubah data okupasi dan kompetensi
-                </p>
-            </div>
-
-            <a href="{{ route('okupasi.index') }}" class="btn btn-light border">
-                <i class="fas fa-arrow-left me-1"></i>
-                Kembali
-            </a>
-
-        </div>
-
-        {{-- CARD --}}
-        <div class="card border-0 shadow-sm rounded-4">
-
-            <div class="card-body p-4">
-
-                <form action="{{ route('okupasi.update', $okupasi->id_okupasi) }}" method="POST">
-
-                    @csrf
-                    @method('PUT')
-
-                    <div class="row g-4">
-
-                        {{-- KODE OKUPASI --}}
-                        <div class="col-md-6">
-
-                            <label class="form-label fw-semibold">
-                                Kode Okupasi
-                            </label>
-
-                            <input type="text" name="kode_okupasi"
-                                class="form-control @error('kode_okupasi') is-invalid @enderror"
-                                value="{{ old('kode_okupasi', $okupasi->kode_okupasi) }}">
-
-                            @error('kode_okupasi')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        </div>
-
-                        {{-- NAMA OKUPASI --}}
-                        <div class="col-md-6">
-
-                            <label class="form-label fw-semibold">
-                                Nama Okupasi
-                            </label>
-
-                            <input type="text" name="nama_okupasi"
-                                class="form-control @error('nama_okupasi') is-invalid @enderror"
-                                value="{{ old('nama_okupasi', $okupasi->nama_okupasi) }}">
-
-                            @error('nama_okupasi')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        </div>
-
-                        {{-- CLUSTER SKILL --}}
-                        <div class="col-md-6">
-
-                            <label class="form-label fw-semibold">
-                                Cluster Skill
-                            </label>
-
-                            <select name="id_cluster_skill" id="clusterSkill"
-                                class="form-select @error('id_cluster_skill') is-invalid @enderror">
-                                <option value="">
-                                    -- Pilih Cluster Skill --
-                                </option>
-
-                                @foreach ($clusterSkill as $cluster)
-                                    <option value="{{ $cluster->id_cluster_skill }}"
-                                        data-area="{{ $cluster->areaFungsi->nama_area_fungsi }}"
-                                        {{ old('id_cluster_skill', $okupasi->id_cluster_skill) == $cluster->id_cluster_skill ? 'selected' : '' }}>
-                                        {{ $cluster->nama_cluster }}
-                                    </option>
-                                @endforeach
-
-                            </select>
-
-                            @error('id_cluster_skill')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        </div>
-
-                        {{-- AREA FUNGSI --}}
-                        <div class="col-md-6 mb-4">
-
-                            <label class="form-label">
-                                Area Fungsi
-                            </label>
-
-                            <input type="text" id="areaFungsi" class="form-control"
-                                value="{{ $okupasi->areaFungsi->nama_area_fungsi ?? '' }}" readonly>
-                        </div>
-
-                        {{-- KOMPETENSI --}}
-                        <div class="col-12">
-
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-
-                                <label class="form-label fw-semibold mb-0">
-                                    Kompetensi Terkait
-                                </label>
-
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#kompetensiModal">
-
-                                    <i class="fas fa-plus me-1"></i>
-                                    Tambah Kompetensi Baru
-
-                                </button>
-
-                            </div>
-
-                            {{-- SEARCH --}}
-                            <div class="mb-3">
-
-                                <input type="text" id="searchKompetensi" class="form-control"
-                                    placeholder="Cari kode atau nama kompetensi...">
-
-                            </div>
-
-                            <div id="kompetensiContainer" class="border rounded-4 p-3 bg-light"
-                                style="max-height:350px; overflow-y:auto;">
-                                @foreach ($kompetensi as $item)
-                                    <div class="form-check mb-2 kompetensi-row"
-                                        data-search="{{ strtolower($item->kode_kompetensi . ' ' . $item->kompetensi) }}">
-
-                                        <input class="form-check-input" type="checkbox" name="kompetensi[]"
-                                            value="{{ $item->id_kompetensi }}" id="k{{ $item->id_kompetensi }}"
-                                            {{ in_array($item->id_kompetensi, $okupasi->kompetensi->pluck('id_kompetensi')->toArray()) ? 'checked' : '' }}>
-
-                                        <label class="form-check-label" for="k{{ $item->id_kompetensi }}">
-
-                                            <strong>
-                                                {{ $item->kode_kompetensi }}
-                                            </strong>
-
-                                            -
-
-                                            {{ $item->kompetensi }}
-
-                                        </label>
-
-                                    </div>
-                                @endforeach
-
-                            </div>
-
-                        </div>
-
-                        {{-- DESKRIPSI --}}
-                        <div class="col-12">
-
-                            <label class="form-label fw-semibold">
-                                Deskripsi
-                            </label>
-
-                            <textarea name="deskripsi" rows="5" class="form-control @error('deskripsi') is-invalid @enderror">{{ old('deskripsi', $okupasi->deskripsi) }}</textarea>
-
-                            @error('deskripsi')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        </div>
-
-                    </div>
-
-                    {{-- BUTTON --}}
-                    <div class="d-flex justify-content-end gap-2 mt-4">
-
-                        <a href="{{ route('okupasi.index') }}" class="btn btn-light border">
-
-                            Batal
-
-                        </a>
-
-                        <button type="submit" class="btn btn-primary">
-
-                            <i class="fas fa-save me-1"></i>
-                            Simpan Perubahan
-
-                        </button>
-
-                    </div>
-
-                </form>
-
-            </div>
+            </form>
 
         </div>
 
     </div>
+
+    </div>
     <script>
         function closePopup() {
-            document.getElementById('errorPopup').style.display = 'none';
+            const popup = document.getElementById('errorPopup');
+
+            if (popup) {
+                popup.remove();
+            }
         }
-    </script>
-    <script>
-        document
-            .getElementById('clusterSkill')
-            .addEventListener('change', function() {
-
-                let selected =
-                    this.options[this.selectedIndex];
-
-                document.getElementById('areaFungsi').value =
-                    selected.dataset.area || '';
-
-            });
     </script>
     <script>
         document
@@ -387,7 +369,7 @@
                 <div class="modal-header">
 
                     <h5 class="modal-title">
-                        Tambah Kompetensi
+                        Tambah Kompetensi Baru
                     </h5>
 
                     <button type="button" class="btn-close" data-bs-dismiss="modal">
@@ -417,6 +399,16 @@
 
                     </div>
 
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Pernyataan Kompetensi
+                        </label>
+
+                        <textarea id="pertanyaanKompetensi" class="form-control" rows="4"></textarea>
+
+                    </div>
+
                 </div>
 
                 <div class="modal-footer">
@@ -443,11 +435,9 @@
     <script>
         function simpanKompetensi() {
 
-            let kode =
-                document.getElementById('kodeKompetensi').value;
-
-            let nama =
-                document.getElementById('namaKompetensi').value;
+            let kode = document.getElementById('kodeKompetensi').value;
+            let nama = document.getElementById('namaKompetensi').value;
+            let pernyataan = document.getElementById('pertanyaanKompetensi').value;
 
             fetch("{{ route('kompetensi.ajax.store') }}", {
 
@@ -460,57 +450,50 @@
                     },
 
                     body: JSON.stringify({
-
                         kode_kompetensi: kode,
-                        kompetensi: nama
-
+                        kompetensi: nama,
+                        pertanyaan_kompetensi: pernyataan
                     })
 
                 })
-
                 .then(async response => {
 
                     let data = await response.json();
 
                     if (!response.ok) {
-
                         throw data;
-
                     }
 
                     return data;
 
                 })
-
                 .then(result => {
 
                     let item = result.data;
 
                     let html = `
+        <div class="form-check mb-2 kompetensi-row"
+            data-search="${item.kode_kompetensi.toLowerCase()} ${item.kompetensi.toLowerCase()}">
 
-<div class="form-check mb-2 kompetensi-row"
-     data-search="${item.kode_kompetensi.toLowerCase()} ${item.kompetensi.toLowerCase()}">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                checked
+                name="kompetensi[]"
+                value="${item.id_kompetensi}"
+                id="new${item.id_kompetensi}">
 
-    <input
-        class="form-check-input"
-        type="checkbox"
-        checked
-        name="kompetensi[]"
-        value="${item.id_kompetensi}"
-        id="new${item.id_kompetensi}">
+            <label class="form-check-label"
+                for="new${item.id_kompetensi}">
 
-    <label class="form-check-label"
-        for="new${item.id_kompetensi}">
+                <strong>${item.kode_kompetensi}</strong>
+                -
+                ${item.kompetensi}
 
-        <strong>${item.kode_kompetensi}</strong>
-        -
-        ${item.kompetensi}
+            </label>
 
-    </label>
-
-</div>
-
-`;
+        </div>
+        `;
 
                     document
                         .getElementById('kompetensiContainer')
@@ -518,16 +501,16 @@
 
                     document.getElementById('kodeKompetensi').value = '';
                     document.getElementById('namaKompetensi').value = '';
+                    document.getElementById('pertanyaanKompetensi').value = '';
 
                     bootstrap.Modal
-                        .getInstance(
-                            document.getElementById('kompetensiModal')
-                        )
+                        .getInstance(document.getElementById('kompetensiModal'))
                         .hide();
 
                 })
-
                 .catch(error => {
+
+                    console.log(error);
 
                     if (error.errors) {
 
@@ -539,14 +522,36 @@
 
                     } else {
 
-                        alert(
-                            'Terjadi kesalahan saat menyimpan kompetensi.'
-                        );
+                        alert('Terjadi kesalahan saat menyimpan kompetensi.');
 
                     }
 
                 });
-
         }
     </script>
+    @if ($errors->any())
+        <div class="popup-overlay" id="errorPopup">
+
+            <div class="popup-box">
+
+                <div class="popup-icon">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+
+                <h3>Data Belum Lengkap</h3>
+
+                <p>
+                    Mohon lengkapi seluruh data yang diperlukan sebelum menyimpan perubahan.
+                </p>
+
+                <button type="button" class="popup-btn" onclick="closePopup()">
+
+                    Oke
+
+                </button>
+
+            </div>
+
+        </div>
+    @endif
 @endsection
